@@ -1,0 +1,328 @@
+\documentclass{amsart}
+\usepackage{amsmath, amssymb, amsthm, enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{18.100B Problem Set 2}
+\author{Shuo Zheng}
+\date{January 12, 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    In vector spaces, metrics are usually defined in terms of norms which measure the length of a vector. If $V$ is a vector space over $\mathbb{R}$, then a norm is a function from vectors to real numbers, denoted by $\Vert \cdot \Vert$ satisfying:
+    \begin{enumerate}[label = (\roman*)]
+        \item $\Vert x \Vert \geq 0$ and $\Vert x \Vert = 0 \iff x = 0$;
+        \item $\forall \lambda \in \mathbb{R}, \ \Vert \lambda x \Vert = \vert \lambda \vert \Vert x \Vert$;
+        \item $\Vert x+y \Vert \leq \Vert x \Vert + \Vert y \Vert$.
+    \end{enumerate}
+    Prove that every norm defines a metric. 
+\end{problem}
+
+\begin{proof}
+    Let $V$ be any vector space over $\mathbb{R}$. Make a function $d: V \times V \to \mathbb{R}$ such that 
+    \[
+    d(x,y) = \Vert x-y \Vert.
+    \]
+    We want to show that $d$ is a metric on $V$.
+    \begin{enumerate} [label = (\alph*)]
+        \item (Positive Definite) If $x,y \in V$, then
+        \[
+        d(x,y) = \Vert x-y \Vert \geq 0;
+        \]
+        however,
+        \[
+        d(x,y) = 0 \iff \Vert x - y \Vert = 0 \iff x - y = 0 \iff x = y.
+        \]
+        \item (Symmetry) If $x,y \in V$, then
+        \begin{align*}
+            d(x,y) = \Vert x-y \Vert &= \Vert (-1)(y-x) \Vert \\
+            &= \vert (-1) \vert \Vert y-x \Vert = \Vert y-x \Vert = d(y,x).
+        \end{align*}
+        \item (Triangle Inequality) If $x,y,z \in V$, then
+        \begin{align*}
+            d(x,z) &= \Vert x-z \Vert \\
+            &= \Vert (x-y) + (y-z) \Vert \\
+            &\leq \Vert x-y \Vert + \Vert y-z \Vert = d(x,y) + d(y,z).
+        \end{align*}
+    \end{enumerate}
+    Thus, $V$ is a metric space, as desired.
+\end{proof}
+
+\begin{problem}
+    Let $(X,d)$ be a metric space. Show that $d'(x,y) = \sqrt{d(x,y)}$ is also a metric on $X$, and that the open sets for $d'$ are the same as the open sets for $d$.
+\end{problem}
+
+\begin{proof}
+    Let $(X,d)$ be any metric space. Note that
+    \[
+    0 \leq a \leq b \implies b - a \geq 0 \implies (\sqrt{b} + \sqrt{a})(\sqrt{b} - \sqrt{a}) \geq 0 \implies \sqrt{a} \leq \sqrt{b}.
+    \]
+    Define a function $d': X \times X \to \mathbb{R}$ by 
+    \[
+    d'(x,y) = \sqrt{d(x,y)}.
+    \]   
+    Note that
+    \begin{align*}
+        a,b \geq 0 \implies \sqrt{ab} \geq 0 &\implies a + b \leq a + 2\sqrt{ab} + b \\
+        &\implies (\sqrt{a+b})^2 \leq (\sqrt{a} + \sqrt{b})^2 \implies \sqrt{a+b} \leq \sqrt{a} + \sqrt{b}.
+    \end{align*}
+    We want to show that $d'$ is a metric on $X$. 
+    \begin{enumerate} [label = (\alph*)]
+        \item (Positive Definite) If $x,y \in X$, then
+        \[
+        d(x,y) \geq 0 \implies d'(x,y) = \sqrt{d(x,y)} \geq 0;
+        \]
+        however,
+        \[
+        x = y \iff d(x,y) = 0 \iff \sqrt{d(x,y)} = 0 \iff d'(x,y) = 0.
+        \]
+        \item (Symmetry) If $x,y \in X$, then $d(x,y) = d(y,x)$; hence,
+        \[
+        d'(x,y) = \sqrt{d(x,y)} = \sqrt{d(y,x)} = d'(y,x).
+        \]
+        \item (Triangle Inequality) If $x,y,z \in X$, then $d(x,z) \leq d(x,y) + d(y,z)$; hence,
+        \begin{align*}
+            d'(x,z) = \sqrt{d(x,z)} &\leq \sqrt{d(x,y) + d(y,z)} \\
+            &\leq \sqrt{d(x,y)} + \sqrt{d(y,z)} = d'(x,y) + d'(y,z).
+        \end{align*}
+    \end{enumerate}
+    Thus, $(X,d')$ is a metric space, as desired. Note that
+    \[
+    0 \leq a \leq b \implies b \pm a \geq 0 \implies b^2 - a^2 = (b + a)(b - a) \geq 0 \implies a^2 \leq b^2.
+    \]
+    Choose $E \subset X$ to be open for $d$. Given $x \in E$, $\exists r > 0$ such that
+    \[
+    N_r(x) \subset E.
+    \]
+    Thus,
+    \begin{align*}
+        z \in N'_{\sqrt{r}}(x) &\implies d'(x,z) < \sqrt{r} \\
+        &\implies d(x,z) = d'(x,z)^2 < r \implies z \in N_{r}(x);
+    \end{align*}
+    hence, 
+    \[
+    N'_{\sqrt{r}}(x) \subset N_r(x) \subset E.
+    \]
+    Indeed, $E$ is open for $d'$. Choose $E' \subset X$ to be open for $d'$. Given $x \in E'$, $\exists r > 0$ such that
+    \[
+    N'_r(x) \subset E'.
+    \]
+    Thus,
+    \begin{align*}
+        z \in N_{r^2}(x) &\implies d(x,z) < r^2 \\
+        &\implies d'(x,z) = \sqrt{d(x,z)} < r \implies z \in N'_{r}(x);
+    \end{align*}
+    hence, 
+    \[
+    N_{r^2}(x) \subset N'_{r}(x) \subset E'.
+    \]
+    Indeed, $E'$ is open for $d$. Thus, the open subsets for $d$ and $d'$ are the same, as desired.
+\end{proof}
+
+\begin{problem}
+    Let E be a subset of a metric space $X$. The interior $E^{\mathrm{o}}$ is defined by 
+    \[
+    E^{\mathrm{o}} := \{x \in E : \text{$x$ is an interior point}\}. 
+    \]
+    \begin{enumerate}[label = (\alph*)]
+        \item Prove that $E^{\mathrm{o}}$ is always open.
+        \item Prove that $E$ is open if and only if $E = E^{\mathrm{o}}$.
+        \item If $G \subset E$ and $G$ is open, prove that $G \subset E^{\mathrm{o}}$.
+        \item Prove that $X \setminus E^{\mathrm{o}} = \overline{X \setminus E}$.
+        \item Do $E$ and $\overline{E}$ always have the same interiors?
+        \item Do $E$ and $E^{\mathrm{o}}$ always have the same closures?
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}
+    Let $X$ be any metric space. Assume $E \subset X$.
+    \begin{enumerate}[label = (\alph*)]
+        \item Suppose $x \in E^{\mathrm{o}}$. Then $x$ is an interior point of $E$; hence, $\exists r > 0$ such that $N_r(x) \subset E$. Choose $y \in N_r(x)$. By Theorem 2.19,
+        \[
+        N_{r-d(x,y)}(y) \subset N_r(x) \subset E.
+        \]
+        Indeed, $N_r(x) \subset E^{\mathrm{o}}$.
+        \item By definition,
+        \[
+        \text{$E$ is open} \iff \forall x \in E, \ x \in E^{\mathrm{o}} \iff E \subset E^{\mathrm{o}};
+        \]
+        however, $E \supset E^{\mathrm{o}}$, so
+        \[
+        \text{$E$ is open} \iff E = E^{\mathrm{o}}.
+        \]
+        \item Suppose $G \subset E$ is open. If $x \in G$, then $x \in G^{\mathrm{o}}$; hence, $\exists r > 0$ such that 
+        \[
+        N_r(x) \subset G \subset E;
+        \]
+        hence, $x \in E^{\mathrm{o}}$. Thus, $G \subset E^{\mathrm{o}}$.
+        \item By definition,
+        \begin{align*}
+            x \in X \setminus E^{\mathrm{o}} &\iff x \notin E^{\mathrm{o}} \\
+            &\iff \forall r > 0, \ N_r(x) \not \subset E \\
+            &\iff \forall r > 0, \ N_r(x) \cap (X \setminus E) \neq \emptyset \iff x \in \overline{X \setminus E};
+        \end{align*}
+        hence, $X \setminus E^{\mathrm{o}} = \overline{X \setminus E}$.
+        \item No, $E$ and $\overline{E}$ can have different interiors. Define $X = \mathbb{R}$ and $E = \mathbb{Q}$. If $x \in X$, then
+        \[
+        \forall r > 0, \exists q \in E \ \text{such that} \ q \in (N_r(x) \cap E) \setminus \{x\};
+        \]
+        hence, $x \in \overline{E}$. Therefore, $\overline{E} = X$. Similarly, $\overline{X \setminus E} = X$; hence,
+        \[
+        X \setminus E^{\mathrm{o}} = \overline{X \setminus E} = X \implies E^{\mathrm{o}} = \emptyset.
+        \]
+        Thus, $E^{\mathrm{o}} = \emptyset \neq X = (\overline{E})^{\mathrm{o}}$; hence, $E^{\mathrm{o}} \neq (\overline{E})^{\mathrm{o}}$.        
+        \item No, $E$ and $E^{\mathrm{o}}$ can have different closures. If $X = \mathbb{R}$ and $E = \mathbb{Q}$, then
+        \[
+        \overline{E} = X \neq \emptyset = \overline{E^{\mathrm{o}}};
+        \]
+        hence, $\overline{E} \neq \overline{E^{\mathrm{o}}}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}
+     Consider $\mathbb{R}$ with the standard metric. Let $E \subset \mathbb{R}$ be a subset that has no limit points. Show that $E$ is countable.
+\end{problem}
+
+\begin{proof}
+    Let $E$ be any subset of $\mathbb{R}$. Suppose $E$ has no limit points.
+    Then $\forall x \in E$, $x$ is an isolated point; hence, $\exists r_x > 0$ such that $B_{r_x}(x) \cap E = \{x\}$. By the Density of $\mathbb{Q}$, there are infinitely many rational numbers in each neighborhood of real numbers. Make a function $f: E \to \mathbb{Q}$ such that $f(x) \in \mathbb{Q}$ and
+    \[
+    \vert f(x) - x \vert < \frac{r_x}{2}.
+    \]
+    Then $\forall x \in E$, $f(x) \notin E$. We want to show that $f$ is $1-1$. Assume $f(x) = f(y)$. Then $\exists q \in \mathbb{Q}$, $\vert x - q \vert < r_x$ and $\vert y - q \vert < r_y$ (namely, $q := f(x) = f(y)$). Without loss of generality, fix $r_x \geq r_y$. By the Triangle Inequality, 
+    \[
+    \vert x - y \vert \leq \vert x - q \vert + \vert q - y \vert < \frac{r_x}{2} + \frac{r_y}{2} = \frac{r_x + r_y}{2} \leq r_x \implies x = y; 
+    \]
+    otherwise, $x$ is not an isolated point of $E$. Then $x = y$. Indeed, $f$ is $1-1$. Thus, $\vert E \vert \leq \vert \mathbb{Q} \vert = \vert \mathbb{N} \vert$; hence, $E$ is countable. 
+\end{proof}
+
+\begin{problem}
+     Let $E$ be a subset of a metric space $X$. Recall that $\overline{E}$, the closure of $E$, is the union of $E$ and its limit points. Recall that a point $x \in X$ belongs to the boundary of $E$, $\partial E$, if every open ball centered at $x \in X$ contains points of $E$ and points of $E^c$, the complement of $E$. Prove that:
+     \begin{enumerate}[label = (\alph*)]
+         \item $\partial E = \overline{E} \cap \overline{E^c}$,
+         \item $x \in \partial E \iff x \in \overline{E} \setminus E^{\mathrm{o}}$,
+         \item $\partial E$ is a closed set,
+         \item $E \ \text{is closed} \iff \partial E \subset E$.
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}
+    Let $X$ be any metric space. Suppose $E \subset X$.
+    \begin{enumerate}[label = (\alph*)]
+         \item Then
+         \begin{align*}
+            x \in \partial E &\iff \forall r > 0, N_r(x) \cap E \neq \emptyset \land N_r(x) \cap E^{c} \neq \emptyset \\
+            &\iff x \in \overline{E} \land x \in \overline{E^c} \iff x \in \overline{E} \cap \overline{E^c}; 
+         \end{align*}
+         hence, $\partial E = \overline{E} \cap \overline{E^c}$.
+         \item Then
+         \begin{align*}
+             x \in \partial E &\iff \forall r > 0, N_r(x) \cap E \neq \emptyset \land N_r(x) \not \subset E \\
+             &\iff x \in \overline{E} \land x \notin E^{\mathrm{o}} \iff x \in \overline{E} \setminus E^{\mathrm{o}};
+         \end{align*}
+         hence, $x \in \partial E \iff x \in \overline{E} \setminus \overline{E^c}$.
+         \item By Theorems 2.24 and 2.27, $\overline{E}$ and $\overline{E^c}$ are closed subsets (Theorem 2.27); hence, $\partial E = \overline{E} \cap \overline{E^c}$ is a closed subset (Theorem 2.24).
+         \item By Theorem 2.27,
+         \[
+         E \ \text{is closed} \implies E = \overline{E} \implies \partial E \subset \overline{E} = E \implies \partial E \subset E;
+         \]
+         however,
+         \[
+         \partial E \subset E \implies E \supset E^{\mathrm{o}} \cup \partial E = \overline{E} \implies E = \overline{E} \implies E \ \text{is closed},
+         \]
+         so
+         \[
+         E \ \text{is closed} \iff \partial E \subset E.
+         \]
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}
+    Prove that every open set in $\mathbb{R}$ is the union of a countable collection of disjoint open intervals.
+\end{problem}
+
+\begin{proof}
+    Let $E$ be any open set in $\mathbb{R}$. We want to show that $E$ is a union of disjoint open intervals. Assume $x \in E$. Define the sets
+    \[
+    F_x := \{y \in \mathbb{R} : y \leq x \land [y,x] \subset E\}  
+    \]
+    and 
+    \[
+    U_x := \{y \in \mathbb{R} : y \geq x \land [x,y] \subset E\}. \]
+    Note that $F_x,U_x \subset E$. Given $E$ is open, $\exists \epsilon > 0$ such that 
+    \[
+    [x - \epsilon,x + \epsilon] \subset E \implies x - \epsilon \in F_x \land x + \epsilon \in U_x;
+    \]
+    hence, $F_x$ and $U_x$ both contain elements other than $x$. Make $c_x := \inf F_x \geq -\infty$ and $d_x := \sup U_x \leq \infty$.
+
+    Claim 1: $(c_x,x] \subset E$ and $[x,d_x) \subset E$.
+
+    If $y \in (c_x,x)$, then $\exists y' \in F_x$ such that $c_x < y' < y$ (else, $c_x \neq \inf F_x$); hence, $[y',x] \subset E$ and $y \in E$ (moreover, $y \in F_x$). Similarly, $[x,d_x) \subset E$.
+
+    Claim 2: $c_x \notin E$ and $d_x \notin E$. 
+
+    Suppose, for obtaining a contradiction, $d_x \in E$. If $d_x < \infty$, then $\exists \epsilon > 0$ such that
+    \[
+    [x,d_x+\epsilon] = [x,d_x] \cup [d_x,d_x+\epsilon] \subset E \implies d_x+\epsilon \in U_x;
+    \]
+    hence, $d_x$ cannot be an upper bound of $U_x$, so $d_x \notin E$. If $d_x = \infty$, then $d_x \notin E$. Similarly, $c_x \notin E$.
+
+    Claim 3: $(c_x,x] = F_x$ and $[x,d_x) = U_x$.
+
+    By Claim 1, $(c_x,x] \subset F_x$. If $y \in F_x$, then $c_x \leq y \leq x$; however, $c_x \notin F_x$, so 
+    \[
+    c_x < y \leq x \implies y \in (c_x,x]
+    \]
+    and $F_x \subset (c_x,x]$. Indeed, $(c_x,x] = F_x$. Similarly, $[x,d_x) = U_x$. 
+    
+    Define the set $E_x := (c_x,d_x) = F_x \cup U_x$. Thus,
+    \[
+    x \in E \iff x \in E_x \iff x \in \bigcup_{x \in E}E_x; 
+    \]
+    hence,
+    \[
+    E = \bigcup_{x \in E}E_x.
+    \]
+    Define the collection
+    \[
+    \mathcal{U} := \{E_x \subset \mathbb{R} : x \in E\}.
+    \]
+    
+    Claim 4: If $x,y \in E$, then either $E_x = E_y$ or $E_x \cap E_y = \emptyset$.
+
+    If $x,y \in E$, then either $E_x = E_y$ or $E_x \neq E_y$. Suppose $E_x \neq E_y$. Make $(c,d) = E_x$ and $(e,f) = E_y$. Without loss of generality, fix $c \leq e$. If $c < e$, then 
+    \[
+    e < d \implies e \in E_x \subset E;
+    \]
+    however, $e \notin E$ (Claim 2), so 
+    \[
+    e \geq d \implies E_x \cap E_y = \emptyset.
+    \]
+    If $c = e$, then $d \neq f$; hence, either $d < f$ or $d > f$. Without loss of generality, take $d < f$. Then $d \in E_y \subset E$; however, $d \notin E$ (Claim 2), a contradiction. Indeed, 
+    \[
+    E_x \neq E_y \implies E_x \cap E_y = \emptyset.
+    \]
+
+    Thus, $\mathcal{U}$ is a collection of disjoint open intervals; hence, $E$ can be written as a union of disjoint open intervals. We want to show that $\mathcal{U}$ is countable. By the Axiom of Choice, we can construct a function $f: \mathcal{U} \to \mathbb{Q}$ such that
+    \[
+    f(S) \in S \cap \mathbb{Q}.
+    \]
+
+    Claim 5: $f$ is $1-1$.
+
+    If $S,T \in \mathcal{U}$, then
+    \begin{align*}
+        f(S) = f(T) &\implies \exists q \in S \cap T \ (\text{namely, $q := f(S) = f(T)$}) \\
+        &\implies S \cap T \neq \emptyset \\
+        &\implies S = T \ (\text{Claim 4}); 
+    \end{align*}
+    hence, $f$ is $1-1$.
+
+    Thus, $\vert \mathcal{U} \vert < \vert \mathbb{Q} \vert = \vert \mathbb{N} \vert$; hence, $\mathcal{U}$ is countable.
+\end{proof}
+
+\end{document}
