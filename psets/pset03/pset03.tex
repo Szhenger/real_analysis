@@ -1,0 +1,294 @@
+\documentclass{amsart}
+\usepackage{amsmath, amssymb, amsthm, enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{18.100B Problem Set 3}
+\author{Shuo Zheng}
+\date{Feburary 12, 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+Prove directly from the definition that the set
+\[
+K = \left\{0,1,\frac{1}{2},\frac{1}{3},...,\frac{1}{n},...\right\} \subset \mathbb{R}
+\]
+is compact.
+\end{problem}
+
+\begin{proof}
+    Let $\{\mathcal{U}_{\alpha}\}$ be any open cover of $K$ in $\mathbb{R}$. Then $\exists \alpha_0$ where $0 \in \mathcal{U}_{\alpha_0}$; however, $\mathcal{U}_{\alpha_0}$ is open in $\mathbb{R}$, so $\exists \epsilon > 0$ where $N_{\epsilon}(0) \subset \mathcal{U}_{\alpha_0}$. By the Archimedean Property of $\mathbb{R}$, $\exists M \in \mathbb{N}$ such that $M\epsilon > 1$; hence,
+    \[
+    n > M \implies \bigg \vert \frac{1}{n} - 0 \bigg \vert = \frac{1}{n} < \frac{1}{M} < \epsilon,
+    \]
+    i.e. $N_{\epsilon}(0)$ contains all except finitely many elements of $K$, namely
+    \[
+    1,...,\frac{1}{M}.
+    \]
+    Given $\{\mathcal{U}_{\alpha}\}$ covers $K$, $\exists \alpha_1,...,\alpha_M$ such that 
+    \[
+    1 \in \mathcal{U}_{\alpha_1} \land \cdot \cdot \cdot \land \frac{1}{M} \in \mathcal{U}_{\alpha_M}.
+    \]
+    Thus, 
+    \[
+    K \subset \bigcup_{i=0}^{M}\mathcal{U}_{\alpha_i};
+    \]
+    hence, $\{\mathcal{U}_{\alpha}\}$ has a finite subcover in $\mathbb{R}$.
+\end{proof}
+
+\begin{problem}
+    Let $K$ be a compact subset of a metric space $X$, and let $\{\mathcal{U}_{\alpha}\}$ be an open cover of $K$. Show that there is a positive real number $\delta$ with the property that for every $x \in K$ there is some $\alpha$ with
+    \[
+    B_{\delta}(x) \subset \mathcal{U}_{\alpha}.
+    \]
+\end{problem}
+
+\begin{proof}
+    Let $X$ be any metric space. Assume $K$ is a compact subset of $X$. Suppose $\{\mathcal{U}_{\alpha}\}_{\alpha \in I}$ is an open cover of $K$ in $X$. Then $\forall x \in K$, $x \in \mathcal{U}_{\alpha}$ for some $\alpha \in I$; however, $\mathcal{U}_{\alpha}$ is open, so 
+    \[
+    B_{\epsilon}(x) \subset \mathcal{U}_{\alpha}
+    \]
+    for some $\epsilon > 0$. Define the open subsets
+    \[
+    \mathcal{V}_{\alpha,n} := \{x \in \mathcal{U}_{\alpha} : B_{\frac{1}{n}}(x) \subset \mathcal{U}_{\alpha}\}^{\mathrm{o}}
+    \]
+    of $X$ for all $\alpha \in I$ and $n \in \mathbb{N}$. Fix $\alpha \in I$. By the Archimedean Property of $\mathbb{R}$, $\forall \epsilon > 0$ $\exists M \in \mathbb{N}$ such that $M\epsilon > 1$. Then $\forall x \in \mathcal{U}_{\alpha}$, $\exists M \in \mathbb{N}$ where
+    \[
+    B_{\frac{1}{M}}(x) \subset B_{\epsilon}(x) \subset \mathcal{U}_{\alpha}
+    \]
+    for some $\epsilon > 0$ and
+    \[
+    \mathcal{U}_{\alpha} = \bigcup_{n \in \mathbb{N}}\mathcal{V}_{\alpha,n}.
+    \]
+    Note $\alpha$ is arbitrary. Then
+    \[
+    K \subset \bigcup_{\alpha \in I}\mathcal{U}_{\alpha} \subset \bigcup_{\alpha \in I}\bigcup_{n \in \mathbb{N}}\mathcal{V}_{\alpha,n};
+    \]
+    hence, $\{\mathcal{V}_{\alpha,n}\}_{\alpha \in I, n \in \mathbb{N}}$ is an open cover of $K$ in $X$. Given $K$ is compact, there exists a finite subcover $\{\mathcal{V}_{\alpha_i,n_i}\}_{i = 1}^{N}$. Define the number $\delta := \min\{n_1^{-1},...,n_N^{-1}\} > 0$. Then $\forall x \in K$, $\exists i \in \{1,...,N\}$ such that $x \in \mathcal{V}_{\alpha_i,n_i}$ and
+    \[
+    B_{\frac{1}{n_i}}(x) \subset \mathcal{U}_{\alpha_i};
+    \]
+    however, since $\delta \leq n_i^{-1}$,
+    \[
+    B_{\delta}(x) \subset B_{\frac{1}{n_i}}(x) \subset \mathcal{U}_{\alpha_i}.
+    \]
+    Note $\delta$ is universal. Thus, $\forall x \in K$ $\exists \alpha \in I$ where
+    \[
+    B_{\delta}(x) \subset \mathcal{U}_{\alpha},
+    \]
+    as desired.
+\end{proof}
+
+\begin{problem}
+    Prove that the set 
+    \[
+    E = \{(x,y) \in \mathbb{R}^2 : x^2+y^2 <1\}. 
+    \]
+    is not compact. (As usual, $\mathbb{R}^2$ is equipped with the standard Euclidean metric.)
+\end{problem}
+
+\begin{proof}
+    Start with defining
+    \[
+    \mathcal{U}_n := \left \{(x,y) \in \mathbb{R}^2 : x^2 + y^2 < 1 - \frac{1}{n}\right \}
+    \]
+    for all $n \in \mathbb{N}$. By the Archimedean Property of $\mathbb{R}$, $\forall \epsilon > 0$ $\exists M \in \mathbb{N}$ such that $M\epsilon > 1$. Then $\forall (x,y) \in E$, $\exists \epsilon > 0$ such that
+    \[
+    x^2 + y^2 \leq 1 - \epsilon;
+    \]
+    however, $\exists N \in \mathbb{N}$ such that $N\epsilon > 1$ and 
+    \[
+    x^2 + y^2 \leq 1 - \epsilon < 1 - \frac{1}{N} \implies (x,y) \in \mathcal{U}_N,
+    \]
+    i.e. $\{\mathcal{U}_n\}$ is an open cover of $E$. Given $M,N \in \mathbb{N}$, 
+    \[
+    M \leq N \implies 1 - \frac{1}{M} \leq 1 - \frac{1}{N} \implies \mathcal{U}_M \subset \mathcal{U}_N;
+    \]
+    hence,
+    \[
+    E \Subset X \implies \exists N \in \mathbb{N}, \ E \subset \mathcal{U}_N.
+    \]
+    By the Density of $\mathbb{R}$, $\forall N \in \mathbb{N}$ $\exists (x,y) \in \mathbb{R}^2$ such that 
+    \[
+    1 - \frac{1}{N} < x^2 + y^2 < 1; 
+    \]
+    hence, $(x,y) \in E \setminus \mathcal{U}_N$ ($E$ is not compact).
+\end{proof}
+
+\begin{problem}
+    Regard $\mathbb{Q}$, the set of all rational numbers, as a metric space with $d(x,y) = \vert x - y \vert$. Define the set $E = \{x \in \mathbb{Q} : 2 < x^2 < 3\}$. Show that $E$ is closed and bounded in $\mathbb{Q}$, but that $E$ is not compact. Is $E$ open in $\mathbb{Q}$?
+\end{problem}
+
+\begin{proof}
+    Start with defining
+    \[
+    E := \{x \in \mathbb{Q} : 2 < x^2 < 3\}.
+    \]
+    We want to prove that $E$ is closed and bounded in $\mathbb{Q}$. Consider $x \in E'$. Then $\forall r > 0$, $\exists y \in E$ where
+    \[
+    \vert x - y \vert < r \iff y - r < x < y + r.
+    \]
+    By the Density of $\mathbb{R}$, $\exists \epsilon > 0$ such that
+    \[
+    \sqrt{2} \leq z - \epsilon < x < z + \epsilon \leq \sqrt{3}
+    \]
+    for some $z \in E$; hence, 
+    \[
+    2 \leq (z - \epsilon)^2 < x^2 < (z + \epsilon)^2 \leq 3.
+    \]
+    Then $x \in E$ ($E$ is closed in $\mathbb{Q}$). Consider $x \in E$. Then 
+    \[
+    \vert x \vert \geq 2 \implies x^2 \geq 4 \implies x \not \in E;
+    \]
+    hence,
+    \[
+    x \in E \implies \vert x \vert < 2
+    \]
+    ($E$ is bounded in $\mathbb{Q}$). We want to prove that $E$ is not compact in $\mathbb{Q}$. Consider the open subsets 
+    \[
+    \mathcal{U}_{n} = \left\{x \in \mathbb{Q} : 2 + \frac{1}{n} < x^2 < 3 - \frac{1}{n}\right\} 
+    \]
+    for all $n \in \mathbb{N}$. Then $\{\mathcal{U}_{n}\}$ covers $E$; however, no finite subcollection of $\{\mathcal{U}_{n}\}$ covers $E$ ($E$ is not compact). We want to prove that $E$ is open in $\mathbb{Q}$. Given $x \in E$, there exists a neighborhood $N(x)$ of $\mathbb{R}$ such that 
+    \[
+    N(x) \subset \{x \in \mathbb{R} : 2 < x^2 < 3\};
+    \]
+    hence,
+    \[
+    N(x) \cap \mathbb{Q} \subset E
+    \]
+    ($E$ is open in $\mathbb{Q}$).
+\end{proof}
+
+\begin{problem}
+    Prove that the finite union of compact sets is always compact. Does this assertion also hold for their intersection?
+\end{problem}
+
+\begin{proof}
+    Let $X$ be any metric space. Consider any sequence $\{K_n\}$ of compact sets in $X$. We want to show that any finite union of $\{K_n\}$ is always compact in $X$. Given $K_1$ is compact in $X$, the base case is true (trivially). Inductively, assume 
+    \[
+    \bigcup_{i = 1}^{n}K_i \Subset X.
+    \]
+    Consider any open cover $\{\mathcal{U}_{\alpha}\}_{\alpha \in I}$ of 
+    \[
+    \bigcup_{i = 1}^{n+1}K_i \subset X
+    \]
+    in $X$. Then $\{\mathcal{U}_{\alpha}\}_{\alpha \in I}$ covers $K_1 \cup \cdot \cdot \cdot \cup K_{n}$ because
+    \[
+    K_1 \cup \cdot \cdot \cdot \cup K_{n} \subset K_1 \cup \cdot \cdot \cdot \cup K_{n+1};
+    \]
+    hence, $\exists \alpha_1,...,\alpha_M \in I$ where
+    \[
+    K_1 \cup \cdot \cdot \cdot \cup K_n \subset \mathcal{U}_{\alpha_1} \cup \cdot \cdot \cdot \cup \mathcal{U}_{\alpha_M}. 
+    \]
+    Similarly, $\{\mathcal{U}_{\beta}\}_{\beta \in I}$ covers $K_{n+1}$; hence, $\exists \beta_1,...,\beta_N \in I$ where
+    \[
+    K_{n+1} \subset \mathcal{U}_{\beta_1} \cup \cdot \cdot \cdot \cup \mathcal{U}_{\beta_N}.
+    \]
+    Then
+    \[
+    \bigcup_{i = 1}^{n+1}K_i \subset \bigcup_{i = 1}^{M}\mathcal{U}_{\alpha_i} \cup \bigcup_{i = 1}^{N}\mathcal{U}_{\beta_i};
+    \]
+    hence, $\{\mathcal{U}_{\alpha}\}_{\alpha \in I}$ has a finite subcover of 
+    \[
+    \bigcup_{i = 1}^{n+1}K_i \subset X.
+    \]
+    Thus,
+    \[
+    \bigcup_{i = 1}^{n+1}K_i \Subset X,
+    \]
+    as desired. We want to show that any finite intersection of $\{K_n\}$ is always compact. Given $K_1$ is compact, the base case is true (trivially). Inductively, assume 
+    \[
+    \bigcap_{i = 1}^{n}K_i \Subset X.
+    \]
+    By Theorem 2.34, $K_1 \cap \cdot \cdot \cdot \cap K_n$ and $K_{n+1}$ are closed sets in $X$; hence, 
+    \[
+    K_1 \cap \cdot \cdot \cdot \cap K_{n+1}
+    \]
+    is closed in $X$. Note $\forall i \in \{1,...,n+1\}$,
+    \[
+    K_1 \cap \cdot \cdot \cdot \cap K_{n+1} \subset K_i. 
+    \]
+    By Theorem 2.35, 
+    \[
+    K_1 \cap \cdot \cdot \cdot \cap K_{n+1}
+    \]
+    is compact in $X$. Thus, 
+    \[
+    \bigcap_{i = 1}^{n+1}K_i \Subset X,
+    \]
+    as desired.
+    \end{proof}
+
+\begin{problem}
+    Let $(X,d)$ be a compact metric space, and $f : X \to X$ a map such that $d(f(x),f(y)) \leq d(x,y)$ for all $x \neq y$. Prove that there exists a point $x \in X$ such that $f(x) = x$. \textit{Hint:} How small can $d(x,f(x))$ get?
+\end{problem}
+
+\begin{proof}
+    Let $(X,d)$ be any compact metric space. Make a function $f: X \to X$ such that
+    \[
+    d(f(x),f(y)) \leq d(x,y).
+    \]
+    We want to show that $d(x,f(x)) = 0$ for some $x \in X$. Consider the set
+    \[
+    E := \{d(x,f(x)) \in \mathbb{R} : x \in X\}.
+    \]
+    By the Greatest Upper Bound Property of $\mathbb{R}$, 
+    \[
+    \forall x \in X, \ d(x,f(x)) \geq 0 \implies \inf E \geq 0.
+    \]
+    Define the number $\alpha := \inf E$. Since $\alpha \in \mathbb{R}$, either $\alpha \in E$ or $\alpha \not \in E$ and either $\alpha = 0$ or $\alpha > 0$. Assume, for the purpose of contradiction, $\alpha \notin E$. Consider the subsets
+    \[
+    \mathcal{U}_{n} := \{x \in X : d(x,f(x)) > \alpha + \frac{1}{n}\}
+    \]
+    for all $n \in \mathbb{N}$. We want to show that $\{\mathcal{U}_n\}$ is an open cover of $X$.Then $\forall x \in X$, $\exists \epsilon > 0$ where
+    \[
+    d(x,f(x)) = \alpha + \epsilon > 0;
+    \]    
+    hence, $\exists N \in \mathbb{N}$ where $N\epsilon > 1$ and 
+    \[
+    d(x,f(x)) > \alpha + \frac{1}{N}, 
+    \]
+    i.e. $\{\mathcal{U}_n\}$ covers $X$. Consider $x \in \mathcal{U}_{n}$ for some fixed $n \in \mathbb{N}$. Define the number
+    \[
+     r := \frac{1}{2}\left(d(x,f(x)) - \alpha - \frac{1}{n}\right) > 0.
+    \]
+    By the Reverse Triangle Inequality, 
+    \begin{align*}
+        y \in N_r(x) \implies d(y,f(y)) &\geq d(y,f(x)) - d(f(x),f(y)) \\
+        &\geq d(x,f(x)) - d(x,y) - d(f(x),f(y))\\
+        &\geq d(x,f(x)) - 2d(x,y) \\
+        &> d(x,f(x)) - 2r \\
+        &= \alpha + \frac{1}{n} \implies y \in \mathcal{U}_n;
+    \end{align*}
+    hence, $N_r(x) \subset \mathcal{U}_n$. Thus, $\{\mathcal{U}_n\}$ is an open cover of $X$, as desired. Given that $X$ is compact, $\exists M_1,...,M_k \in \mathbb{N}$ such that 
+    \[
+    X \subset \bigcup_{i = 1}^{k}\mathcal{U}_{M_i}.
+    \]
+    Define the number $M := \max\{M_1,...,M_k\} \in \mathbb{N}$. Then
+    \[
+    x \in X \implies d(x,f(x)) > \alpha + \frac{1}{M_i} > \alpha + \frac{1}{M} \implies x \in \mathcal{U}_M
+    \]
+    for some $i \in \{1,...,k\}$; hence, $\mathcal{U}_{M}$ covers $X$ and
+    \[
+    \forall x \in X, \ d(x,f(x)) > \alpha + \frac{1}{M},
+    \]
+    i.e. $\alpha$ cannot be the greatest lower bound of $E$, a contradiction. Thus, $\alpha \in E$, i.e. $\exists x \in X$ where $d(x,f(x)) = \alpha$. Consider $\alpha = 0$. Then $\exists x \in X$,
+    \[
+    d(x,f(x)) = 0 \implies x = f(x).
+    \]
+    Consider $\alpha > 0$. Then $\exists x \in X$,
+    \[
+    d(x,f(x)) > 0 \implies x \neq f(x).
+    \] 
+    Define the point $y := f(x) \in X$. Then $d(y,f(y)) \in E$ and 
+    \[
+    d(y,f(y)) = d(f(x),f(y)) < d(x,y) = d(x,f(x)) = \alpha 
+    \]
+    (because $x \neq y$); hence, $\alpha$ is not a lower bound of $E$, a contradiction. Thus, $\exists x \in X$ where $f(x) = x$, as desired.
+\end{proof}
+
+\end{document}
