@@ -1,0 +1,298 @@
+\documentclass{amsart}
+\usepackage{amsmath, amssymb, amsthm, enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{18.100B Problem Set 4}
+\author{Shuo Zheng}
+\date{March 3, 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Let $\{x_n\}$ be a convergent sequence in a metric space $(X,d)$. Now permute its terms, forming another sequence $x'_n = x_{f(n)}$, where $f : \mathbb{N} \to \mathbb{N}$ is $1-1$ and onto. Show that $\{x'_n\}$ is convergent, and has the same limit as the original $\{x_n\}$. Is this still true if we drop the assumption that $f$ should be $1-1$?
+\end{problem}
+
+\begin{proof}
+    Let $(X,d)$ be any metric space. Make a convergent sequence $\{x_n\}$ of $X$, with limit $x$. Permute its entries, obtaining a new sequence $x'_n := x_{f(n)}$ of $X$, such that $f: \mathbb{N} \to \mathbb{N}$ is $1-1$ and onto. Consider $\epsilon > 0$. Then $\exists M \in \mathbb{N}$ $\forall n > M$, 
+    \[
+    d(x_n,x) < \epsilon.
+    \]
+    Given $f$ is $1-1$ and onto, there are only finitely many $n \in \mathbb{N}$ such that $f(n) \leq M$; in particular, exactly $M$ such indices, called $n_1,...,n_M \in \mathbb{N}$. Define $N = \max\{n_1,...,n_M\} > 0$. Then
+    \[
+    n > N \implies f(n) > M \implies d(x'_n,x) = d(x_{f(n)},x) < \epsilon.
+    \]
+    Thus, $x'_n \to x$. Consider $X = \mathbb{R}$ with $d(x,y) = \vert x - y \vert$. Define
+    \[
+    x_n = \frac{1}{n} \to 0
+    \]
+    and $x = 0$. Make a function $f: \mathbb{N} \to \mathbb{N}$ by
+    \[
+    f(n) := \begin{cases} 
+        1, & n \in \{2k-1 \in \mathbb{N} : k \in \mathbb{N}\} \\
+        \frac{n}{2}, & n \in \{2k \in \mathbb{N} : k \in \mathbb{N}\}
+    \end{cases}.
+    \]
+    Then $f$ is not $1-1$ and $f$ is onto. Define 
+    \[
+    \epsilon_0 = 1 > 0.
+    \]
+    Given $M$ is any natural number, there exists a natural number $n \geq M$ such that 
+    \[
+    d(x'_n,x) = \vert x'_n - 0 \vert = \vert x'_n \vert \geq \epsilon_0;
+    \]
+    namely, 
+    \[
+    M \in \{2k-1 \in \mathbb{N} : k \in \mathbb{N}\} \implies n = M
+    \]
+    and 
+    \[
+    M \in \{2k \in \mathbb{N} : k \in \mathbb{N}\} \implies n = M + 1.
+    \]
+    Thus, $x_n \to x$; however, $x'_n \not \to x$. 
+\end{proof}
+
+\begin{problem}
+    Find a sequence $\{x_n\}$ with values in $[0,1]$ that has the following property. For every $x \in [0,1]$, we can find a convergent subsequence $\{x_{n_k}\}$ such that $x_{n_k} \to x$ as $k \to \infty$. \textit{Hint:} Think about the rational numbers between $0$ and $1$.
+\end{problem}
+
+\begin{proof}
+    Let $\{x_n\}$ be any sequence of $\mathbb{Q}$ in $[0,1]$. Choose $x \in [0,1]$. Given the Density of $\mathbb{Q}$, there are infinitely many rational numbers between any pair of real numbers. Suppose that $x = 0$. Then $\exists r \in (0,1)$, $0 = x < x + r < 1$; hence,
+    \[
+    \forall k \in \mathbb{N}, \ 0 = x < x + \frac{r}{k+1} < x + \frac{r}{k} < 1.
+    \]
+    Choose $x_{n_1}$ to be any rational number such that 
+    \[
+    0 = x < x_{n_1} < x + r < 1.
+    \]
+    Given that $x_{n_1},...,x_{n_k}$ are fixed, define $x_{n_{k+1}}$ to be any rational number such that $n_k < n_{k+1}$ and 
+    \[
+    0 = x < x_{n_{k+1}} < x + \frac{r}{k+1} < 1.
+    \]
+    By induction, $\{x_{n_k}\}$ is a convergent subsequence of $\{x_n\}$ with limit $x$. Suppose that $x \in (0,1)$. Then $\exists r \in (0,1)$, $0 < x - r < x < x + r < 1$; hence, 
+    \[
+    \forall k \in \mathbb{N}, \ 0 < x - \frac{r}{k} < x - \frac{r}{k+1} < x < x + \frac{r}{k+1} < x + \frac{r}{k} < 1.
+    \]
+    Choose $x_{n_1}$ to be any rational number such that
+    \[
+    0 < x - r < x_{n_1} < x + r < 1.
+    \]
+    Given that $x_{n_1},...,x_{n_k}$ are fixed, define $x_{n_{k+1}}$ to be any rational number such that $n_k < n_{k+1}$ and 
+    \[
+    0 < x - \frac{r}{k+1} < x_{n_{k+1}} < x + \frac{r}{k+1} < 1. 
+    \]
+    By induction, $\{x_{n_k}\}$ is a convergent subsequence of $\{x_n\}$ with limit $x$. Suppose that $x = 1$. Then $\exists r \in (0,1)$, $0 < x - r < x = 1$; hence, 
+    \[
+    \forall k \in \mathbb{N}, \ 0 < x - \frac{r}{k}< x - \frac{r}{k+1} < x = 1.
+    \]
+    Choose $x_{n_1}$ to be any rational number such that
+    \[
+    0 < x - r < x_{n_1} < x = 1.
+    \]
+    Given that $x_{n_1},...,x_{n_k}$ are fixed, define $x_{n_{k+1}}$ to be any rational number such that $n_k < n_{k+1}$ and
+    \[
+    0 < x - \frac{r}{k+1} < x_{n_{k+1}} < x = 1.
+    \]
+    By induction, $\{x_{n_k}\}$ is a convergent subsequence of $\{x_n\}$ with limit $x$. Thus, 
+    \[
+    x \in [0,1] \implies \lim_{k \to \infty}x_{n_k} = x.
+    \]
+\end{proof}
+
+\begin{problem}
+    Fix some prime $p$, and let $X = \mathbb{Z}$ with the $p$-adic metric. Show that the sequence $x_1 = 1$, $x_2 = 1 + p$, $x_3 = 1 + p + p^2$, . . . is a Cauchy sequence. For $p = 2$, show that this sequence converges.
+\end{problem}
+
+\begin{proof}
+    Let $p$ be any prime number. Suppose that $X = \mathbb{Z}$ with the $p$-adic metric. Then $\forall x,y \in X$, $\exists k \in \mathbb{N}$ where $p^{k} \mid (x-y)$ and $p^{k+1} \nmid (x-y)$; hence,
+    \[
+    d(x,y) = \frac{1}{p^k}.
+    \]
+    Make the sequence
+    \[
+    x_n := \sum_{i = 0}^{n-1}p^i.
+    \]
+    Without loss of generality, assume that $m < n$. Then 
+    \[
+    x_n - x_m = \sum_{i = 0}^{n-1}p^i - \sum_{i = 0}^{m-1}p^i = \sum_{i = m}^{n-1}p^i = p^m\sum_{i = 0}^{n-m-1}p^i = p^mx_{n-m}
+    \]
+    hence, $p^m \mid (x_n - x_m)$ and $p^{m+1} \nmid (x_n - x_m)$, i.e.
+    \[
+    d(x_m,x_n) = \frac{1}{p^m}.
+    \]
+    Choose $\epsilon > 0$. Then $\exists M \in \mathbb{N}$ where $M\epsilon > 1$; hence,
+    \[
+    m,n \geq M \implies d(x_m,x_n) = \frac{1}{p^m} < \frac{1}{m} \leq \frac{1}{M} < \epsilon
+    \]
+    and $(x_n)$ is Cauchy. Fix $p = 2$. Then $\forall n \in \mathbb{N}$, 
+    \[
+    x_n := \sum_{i = 0}^{n-1}2^i = 2^n - 1 \implies x_n - (-1) = x_n + 1 = 2^n; 
+    \]
+    hence, $\exists N \in \mathbb{N}$ where $N\epsilon > 1$ and 
+    \[
+    n \geq N \implies d(x_n,-1) = \frac{1}{2^n} < \frac{1}{n} \leq \frac{1}{N} < \epsilon,
+    \]
+    i.e. $(x_n)$ converges to $-1$.
+\end{proof}
+
+\begin{problem}
+    Let $X$ be a complete metric space, and let $Y \subset X$. Show that $Y$ is complete if and only if $Y$ is closed.
+\end{problem}
+
+\begin{proof}
+    Let $(X,d)$ be any metric space. Suppose that $X$ is complete. Choose $Y \subset X$. Thus, $d\vert_Y$ induces a metric on $Y$; hence, $(Y,d\vert_Y)$ is a metric subspace of $(X,d)$. Assume that $Y$ is complete. If $x \in X$ is a limit point of $Y$, then $\exists (x_n) \in Y$ such that $\forall \epsilon > 0$, $\exists M \in \mathbb{N}$ where
+    \[
+    n \geq M \implies d(x_n,x) < \epsilon \implies d\vert_Y(x_n,x) < \epsilon
+    \]
+    (because $Y$ is complete); hence, $x \in Y$ and $Y$ is closed. Assume that $Y$ is closed. If $(x_n) \in Y$ is Cauchy, then $(x_n) \in X$ is Cauchy and $\exists x \in X$ such that $\forall \epsilon > 0$, $\exists M \in \mathbb{N}$ where
+    \[
+    n \geq M \implies d(x_n,x) < \epsilon
+    \]
+    (because $X$ is complete); hence, $x$ is a limit point of $Y$ and $Y$ is complete (because $Y$ is closed).
+\end{proof}
+
+\begin{problem}
+    If $(x_n)$ and $(y_n)$ are two bounded sequences of real numbers, show that
+    \begin{enumerate}[label = (\alph*)]
+        \item $\limsup (x_n + y_n) \leq \limsup x_n + \limsup y_n$,
+        \item $\liminf (x_n + y_n) \geq \liminf x_n + \liminf y_n$,
+        \item $\limsup (x_n + y_n) = \limsup x_n + \limsup y_n$ if $(x_n)$ or $(y_n)$ converges,
+        \item $\liminf (x_n + y_n) = \liminf x_n + \liminf y_n$ if $(x_n)$ or $(y_n)$ converges. 
+    \end{enumerate}    
+    (\textit{Hint:} Pick a subsequence of $(x_n + y_n)$ that converges, then, from these $x_{n_k}$’s pick a subsequence that converges and do the same for the $y_{n_k}$’s)
+\end{problem}
+
+\begin{proof}
+    Let $(x_n)$ and $(y_n)$ be any bounded sequences of $\mathbb{R}$. Thus, $\exists \alpha,\beta \in \mathbb{R}$ where $\forall n \in \mathbb{N}$, $\vert x_n \vert \leq \alpha$ and $\vert y_n \vert \leq \beta$; hence,
+    \[
+    \vert x_n + y_n \vert \leq \vert x_n \vert + \vert y_n \vert \leq \alpha + \beta,
+    \]
+    so
+    \[
+    \sup \{x_n + y_n : n \in \mathbb{N}\} \leq \sup \{x_n : n \in \mathbb{N}\} + \sup \{y_n : n \in \mathbb{N}\} 
+    \]
+    and 
+    \[
+    \inf \{x_n + y_n : n \in \mathbb{N}\} \geq \inf \{x_n : n \in \mathbb{N}\} + \inf \{y_n : n \in \mathbb{N}\}.
+    \]
+    If $x_n \to x$ and $y_n \to y$, then 
+    \[
+    \forall n \in \mathbb{N}, \ x_n \leq y_n \implies x \leq y;
+    \]
+    else, $\exists M \in \mathbb{N}$ such that 
+    \[
+    \forall n \geq M, \ x_n > x - \frac{x-y}{2} = \frac{x+y}{2} = y + \frac{x-y}{2} > y_n.
+    \]
+    \begin{enumerate}[label = (\alph*)]
+        \item Ergo,
+        \begin{align*}
+            \limsup_{n \to \infty}(x_n + y_n) &:= \lim_{n \to \infty} \sup \{x_k + y_n : k \geq n\} \\
+            &\leq \lim_{n \to \infty} (\sup \{x_k : k \geq n\} + \sup \{y_k : k \geq n\}) \\
+            &= \lim_{n \to \infty} \sup \{x_k : k \geq n\} + \lim_{n \to \infty} \sup \{y_k : k \geq n\} \\
+            &=: \limsup_{n \to \infty}x_n + \limsup_{n \to \infty}y_n.
+        \end{align*}
+        \item Ergo,
+        \begin{align*}
+            \liminf_{n \to \infty}(x_n + y_n) &:= \lim_{n \to \infty} \inf \{x_k + y_n : k \geq n\} \\
+            &\geq \lim_{n \to \infty} (\inf \{x_k : k \geq n\} + \inf \{y_k : k \geq n\}) \\
+            &= \lim_{n \to \infty} \inf \{x_k : k \geq n\} + \lim_{n \to \infty} \inf \{y_k : k \geq n\} \\
+            &=: \liminf_{n \to \infty}x_n + \liminf_{n \to \infty}y_n.
+        \end{align*}
+        \item Without loss of generality, assume that $(x_n)$ converges. It follows that $\forall (n_k) \in \mathbb{N}$,
+        \[
+        x_{n_k} \to \limsup_{n \to \infty}x_n;
+        \]
+        however, $\exists (n_k) \in \mathbb{N}$ such that 
+        \[
+        y_{n_k} \to \limsup_{n \to \infty}y_n
+        \]
+        and 
+        \[
+        x_{n_k} + y_{n_k} \to \limsup_{n \to \infty}x_n + \limsup_{n \to \infty}y_n \leq \limsup_{n \to \infty}(x_n+y_n),
+        \]
+        so 
+        \[
+        \limsup_{n \to \infty}(x_n+y_n) = \limsup_{n \to \infty}x_n + \limsup_{n \to \infty}y_n.
+        \]
+        \item Without loss of generality, assume that $(y_n)$ converges. It follows that $\exists (n_k) \in \mathbb{N}$, 
+        \[
+        x_{n_k} \to \liminf_{n \to \infty}x_n;
+        \]
+        hence,
+        \[
+        x_{n_k} + y_{n_k} \to \liminf_{n \to \infty}x_n + \liminf_{n \to \infty}y_n \geq \liminf_{n \to \infty}(x_n+y_n),
+        \]
+        so
+        \[
+        \liminf_{n \to \infty}(x_n+y_n) = \liminf_{n \to \infty}x_n + \liminf_{n \to \infty}y_n.
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}
+    A metric space is called complete if every Cauchy sequence converges. Let $(X,d)$ be a complete metric space, and $f: X \to X$ a map with the following property. There is some $0 \leq \lambda < 1$ such that for all $x,y \in X$,
+    \[
+    d(f(x),f(y)) \leq \lambda d(x,y).
+    \]
+    Prove that then, there is a point $x \in X$ such that $f(x) = x$. \textit{Hint:}
+    \[
+    1 + \lambda + \lambda^2 + \cdot \cdot \cdot + \lambda^n = \frac{1 - \lambda^{n+1}}{1 - \lambda}.
+    \]
+\end{problem}
+
+\begin{proof}
+    Let $(X,d)$ be any metric space. Assume that $X$ is complete. Construct a mapping $f: X \to X$ so that $\exists \lambda \in [0,1)$, 
+    \[
+    d(f(x),f(y)) \leq \lambda d(x,y).
+    \]
+    Pick $x_1 \in X$. Given that $x_1,...,x_k \ (k = 1,2,3,...)$ are fixed, define $x_{k+1} = f(x_k) \ (k = 1,2,3,...)$. By induction, $(x_n)$ is a sequence of $X$. Suppose that $\forall k \in \mathbb{N}$,
+    \[
+    d(x_k,x_{k+1}) \leq \lambda^{k-1} d(x_1,x_2) \ (k \in \mathbb{N}). 
+    \]
+    Then $\forall k \in \mathbb{N}$,
+    \[
+    d(x_{k+1},x_{k+2}) = d(f(x_{k}),f(x_{k+1})) \leq \lambda d(x_k,x_{k+1}) \leq \lambda^k d(x_1,x_2).
+    \]
+    By induction, 
+    \[
+    d(x_n,x_{n+1}) \leq \lambda^{n-1} d(x_1,x_2).
+    \]
+    Without loss of generality, fix $m < n$. By the Triangle Inequality,
+    \begin{align*}
+        d(x_m,x_n) &\leq d(x_m,x_{m+1}) + \cdot \cdot \cdot + d(x_{n-1},x_n) \\
+        &\leq \lambda^{m-1}d(x_1,x_2) + \cdot \cdot \cdot + \lambda^{n-2}d(x_1,x_2) \\
+        &= \frac{\lambda^{m-1}(1-\lambda^{n-m})}{1 - \lambda} \\
+        &< \frac{\lambda^{m-1}}{1-\lambda}.
+    \end{align*}
+    Choose $\epsilon > 0$. By Theorem 3.20($e$), $\exists M \in \mathbb{N}$ such that $\lambda^M < (1-\lambda)\epsilon$; hence,
+    \[
+    m,n \geq M \implies d(x_m,x_n) < \frac{\lambda^{m-1}}{1-\lambda} \leq \frac{\lambda^M}{1-\lambda} < \epsilon.
+    \]
+    Indeed, $(x_n)$ must be Cauchy; hence, $(x_n)$ must be convergent. Given that $(x_n)$ is convergent, $\exists x_0 \in X$ such that
+    \[
+    \lim_{n \to \infty}x_n = x_0;
+    \]
+    hence, $\exists N \in \mathbb{N}$ where 
+    \[
+    n \geq N \implies d(x_n,x_0) < \frac{\epsilon}{1+\lambda}
+    \]
+    and 
+    \begin{align*}
+        d(x_0,f(x_0)) &\leq d(x_0,x_{N+1}) + d(x_{N+1},f(x_0)) \\
+        &= d(x_0,x_{N+1}) + d(f(x_N),f(x_0)) \\
+        &\leq d(x_0,x_{N+1}) + \lambda d(x_N,x_0) \\
+        &= \frac{\epsilon}{1+\lambda} + \frac{\lambda \epsilon}{1+\lambda} = \epsilon.
+    \end{align*}
+    Thus, $d(x_0,f(x_0)) = 0$, i.e. $f(x_0) = x_0$ as desired. Suppose that $\exists x,y \in X$ where $f(x_0) = x_0$ and $f(y_0) = y_0$.
+    Then 
+    \begin{align*}
+        d(x_0,y_0) = d(f(x_0),f(y_0)) \leq \lambda d(x_0,y_0)
+        &\implies (1-\lambda)d(x_0,y_0) \leq 0;
+    \end{align*}
+    hence, $d(x_0,y_0) = 0$ (else $d(x_0,y_0) < 0$) and $x_0 = y_0$.
+\end{proof}
+
+\end{document}
