@@ -1,0 +1,253 @@
+\documentclass{amsart}
+\usepackage{amsmath, amssymb, amsthm, enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{18.100B Problem Set 5}
+\author{Shuo Zheng}
+\date{April 12, 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Prove that if $\sum \vert x_n \vert$ converges, then $\sum \vert x_n \vert^k \ (k = 1,2,3,...)$ converges.
+\end{problem}
+
+\begin{proof}
+    Let $\sum \vert x_n \vert$ be any convergent series. Inductively, assume that $\sum \vert x_n \vert^k$ $(k = 1,2,3,...)$ converges. By Theorem 3.23, 
+    \[
+    \lim_{n \to \infty} \vert x_n \vert^k = 0;
+    \]
+    hence, $\exists N \in \mathbb{N}$ such that 
+    \[
+    n \geq N \implies \vert x_n \vert^k < 1 \implies \vert x_n \vert^{k+1} < \vert x_n \vert. 
+    \]
+    By the Comparison Test, 
+    \[
+    \sum \vert x_n \vert \ \text{converges} \implies \sum \vert x_n \vert^{k+1} \ (k = 1,2,3,...) \ \text{converges}.
+    \]
+    Then $\sum \vert x_n \vert^k \ (k = 1,2,3,...)$ converges. 
+\end{proof}
+
+\begin{problem}
+    Prove that
+    \[
+    \sum_{n=1}^{\infty}\frac{1}{n(n+1)(n+2)} = \frac{1}{4}.
+    \]
+    \textit{Hint:} Use a “telescope trick”, i.e. an argument of the form $\sum x_n = \sum (y_n - y_{n+1}) = y_1$.
+\end{problem}
+
+\begin{proof}
+    Start by defining
+    \[
+    x_n := \frac{1}{n(n+1)(n+2)} \land y_n := \frac{1}{2n} - \frac{1}{2(n+1)} \ (n = 1,2,3,...). 
+    \]
+    Then 
+    \begin{align*}
+        x_n &= \frac{1}{2n} - \frac{1}{n+1} + \frac{1}{2n+2)} \\
+        &= \left(\frac{1}{2} - \frac{1}{2(n+1)}\right) - \left(\frac{1}{2(n+1)} - \frac{1}{2(n+2)}\right) = y_n - y_{n+1} \ (n = 1,2,3,...);
+    \end{align*}
+    hence,
+    \begin{align*}
+        \sum_{n=1}^{\infty} x_n := \lim_{k \to \infty}\sum_{n=1}^{k}x_n &= \lim_{k \to \infty}\sum_{n=1}^{k}(y_n-y_{n+1}) \\
+        &= \lim_{k \to \infty}(y_1 - y_{k+1}) \\
+        &= \lim_{k \to \infty}\left(\frac{1}{4} - \frac{1}{2(k+1)} + \frac{1}{2(k+2)}\right) \\
+        &= \frac{1}{4} - \frac{1}{2}\lim_{k \to \infty}\frac{1}{k+1} + \frac{1}{2}\lim_{k \to \infty}\frac{1}{k+2} = \frac{1}{4}.
+    \end{align*}
+\end{proof}
+
+\begin{problem}
+    Assume $x_0 \geq x_1 \geq x_2 \geq \cdot \cdot \cdot$ and suppose that $\sum x_n$ converges. Prove that
+    \[
+    \lim_{n \to \infty}nx_n = 0.
+    \]
+    \textit{Hint:} Show and use the inequality $nx_{2n} \leq \sum_{k=n+1}^{2n}x_k$.
+\end{problem}
+
+\begin{proof}
+    Let $\sum x_n$ be any convergent series, with $x_0 \geq x_1 \geq x_2 \geq \cdot \cdot \cdot$, of $\mathbb{R}$. Then $x_0 \geq x_1 \geq x_2 \geq \cdot \cdot \cdot \geq 0$; else, $x_n \not \to 0$ as required. By the Cauchy Criterion,
+    \[
+    \forall \epsilon > 0, \ \exists M \in \mathbb{N} \ \text{such that} \ n \geq M \implies nx_{2n} \leq \sum_{k = n+1}^{2n}x_k < \epsilon \implies nx_{2n} \to 0
+    \]
+    and 
+    \[
+    \forall \epsilon > 0, \ \exists N \in \mathbb{N} \ \text{such that} \ n \geq N \implies nx_{2n+1} \leq \sum_{k = n+2}^{2n+1}x_k < \epsilon \implies nx_{2n+1} \to 0.
+    \]
+    Thus, 
+    \[
+    \lim_{n \to \infty}2nx_{2n} = 2\lim_{n \to \infty}nx_{2n} = 0
+    \]
+    and 
+    \[
+    \lim_{n \to \infty}(2n+1)x_{2n+1} = 2\lim_{n \to \infty}nx_{2n+1} + \lim_{n \to \infty}x_{2n+1} = 0;
+    \]
+    hence,
+    \[
+    \lim_{n \to \infty}nx_n = 0
+    \]
+    as desired.
+\end{proof}
+
+\begin{problem}
+    Prove Theorem 3.43, in the book, directly relying on the definition of convergence, and on the fact that the partial sums $s_n = x_1 + \cdot \cdot \cdot + x_n$ of an alternating series satisfy $s_2 \leq s_4 \leq s_6 \leq \cdot \cdot \cdot \leq s_5 \leq s_3 \leq s_1$.
+\end{problem}
+
+\begin{proof}
+    Let $(x_n)$ be any monotone sequence of $\mathbb{R}$. Suppose that 
+    \begin{enumerate}[label=(\alph*)]
+        \item $\vert x_1 \vert \geq \vert x_2 \vert \geq \vert x_3 \vert \geq \cdot \cdot \cdot$; 
+        \item $x_{2m-1} \geq 0$ and $x_{2m} \leq 0$ $(m = 1,2,3,...)$;
+        \item $x_n \to 0$.
+    \end{enumerate}
+    Write that
+    \[
+    \forall n \in \mathbb{N}, \ s_n := x_1 + \cdot \cdot \cdot + x_n.
+    \]
+    Then $\forall n \in \mathbb{N}$,
+    \[
+    s_{2n} \leq s_{2n+2} \leq s_{2n+1};
+    \]
+    hence, $s_2 \leq s_4 \leq s_6 \leq \cdot \cdot \cdot \leq s_5 \leq s_3 \leq s_1$.
+    Define the sets
+    \[
+    E := \{s_{2n} \in \mathbb{R} : n \in \mathbb{N}\} \land F := \{s_{2n+1} \in \mathbb{R} : n \in \mathbb{N}\}.
+    \]
+    Note that $E$ is nonempty and bounded above (with $s_1$). By the Least Upper Bound Property of $\mathbb{R}$, $\exists s \in \mathbb{R}$ where $s = \sup E$. Choose $\epsilon > 0$. Then $s$ is a lower bound of $F$; else, $\exists M \in \mathbb{N}$ where 
+    \[
+    s_{2M} \leq s_{2M+1} < s
+    \]
+    and $s \neq \sup E$. Given that $x_n \to 0$, $\exists N_0 \in \mathbb{N}$ such that 
+    \[
+    n \geq N_0 \implies \vert x_{2n+1} \vert < \epsilon.
+    \]
+    In fact, $\exists N \in \mathbb{N}$ where $N \geq N_0$ and 
+    \[
+    s - \epsilon < s_{2N} < s < s_{2N+1} < s + \epsilon
+    \]
+    (else $s \neq \sup E$); hence, $s = \inf F$. Then $\forall n \in \mathbb{N}, \exists M \in \mathbb{N}$ (namely, $M := 2N$) where 
+    \[
+    n \geq M \implies s - \epsilon < s_{2N} \leq s_n \leq s_{2N+1} < s + \epsilon; 
+    \]
+    hence, $s_n \to s$. Note that $s$ is hard to compute typically. Thus, $\sum x_n$ converges.
+\end{proof}
+
+\begin{problem}
+    Take the convergent series from Example 3.53. It is shown there how to rearrange it so that it converges to a diﬀerent number. Find another explicit rearrangement so that the rearranged series does not converge at all. Note that following our usual terminology, going to $\infty$ also counts as “does not converge” or "diverges".
+\end{problem}
+
+\begin{proof}
+    Start by defining 
+    \[
+    \forall n \in \mathbb{N}, \ x_n := \frac{(-1)^{n+1}}{n}.
+    \]
+    By Theorem 3.43,
+    \[
+    \sum_{n = 1}^{\infty}x_n = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \frac{1}{5} - \frac{1}{6} + \cdot \cdot \cdot
+    \]
+    converges. In fact, 
+    \[
+    2\sum_{m = 1}^{n}x_{2m-1} > \sum_{m = 1}^{n}x_{2m-1} - \sum_{m = 1}^{n}x_{2m} = \sum_{m = 1}^{2n}\frac{1}{m} \to \infty \implies \sum_{m = 1}^{n}x_{2m-1} \to \infty;
+    \]
+    hence,
+    \[
+    \sum_{n = 1}^{\infty}x_{2n-1} = 1 + \frac{1}{3} + \frac{1}{5} + \frac{1}{7} + \cdot \cdot \cdot 
+    \]
+    does not converge. Make an increasing sequence $(N_k)$ of $\mathbb{N}$ in the following way: Pick $N_1 = 1$. Given that $N_1,...,N_k \ (k = 1,2,3,...)$ are fixed, define $N_{k+1}$ such that 
+    \[
+    \sum_{m = 1}^{N_{k+1}}x_{2m-1} - \sum_{m = 1}^{N_k}x_{2m-1} > \frac{1}{2}
+    \]
+    because
+    \[
+    \sum_{m = 1}^{n}x_{2m-1} \to \infty.
+    \]
+    End by defining
+    \[
+    \sum_{m = 1}^{\infty}x'_m = 1 - \frac{1}{2} + \sum_{m = N_1 + 1}^{N_2}\frac{1}{2m-1} - \frac{1}{4} + \cdot \cdot \cdot + \sum_{m = N_{k-1} + 1}^{N_k}\frac{1}{2m-1} - \frac{1}{2k} + \cdot \cdot \cdot
+    \]
+    and 
+    \[
+    \forall k \in \mathbb{N}, \ M_k := N_k + k.
+    \]
+    Lemma 1: 
+    \begin{align*}
+        \forall k \in \mathbb{N}, \ M_k < n < M_{k+1} &\implies
+        \sum_{m = 1}^{n}x'_m - \sum_{m = 1}^{M_k}x'_m = \sum_{m = N_k + 1}^{n-k}x_{2m-1} > 0 \\
+        &\implies \sum_{m = 1}^{n}x'_m > \sum_{m = 1}^{M_k}x'_m.
+    \end{align*}
+    Lemma 2:
+    \[
+    \forall k \in \mathbb{N}, \ \sum_{m = 1}^{M_{k+1}}x'_m - \sum_{m = 1}^{M_k}x'_m = \sum_{m = N_k + 1}^{N_{k+1}}x_{2m-1} + x'_{M_{k+1}} > \frac{1}{2} - \frac{1}{2k + 2} > \frac{1}{4}.
+    \]
+    Lemma 3:
+    \[
+    \forall k \in \mathbb{N}, \ \sum_{m = 1}^{M_k}x'_m > \frac{k}{4} \implies \sum_{m = 1}^{M_{k + 1}}x'_m > \sum_{m = 1}^{M_k}x'_m + \frac{1}{4} > \frac{k+1}{4}. 
+    \]
+    Lemma 4: 
+    \[
+    \sum_{m = 1}^{n}x'_m \to \infty.
+    \]
+    Thus,
+    \[
+    \sum_{m = 1}^{\infty}x'_m = 1 - \frac{1}{2} + \sum_{m = N_1 + 1}^{N_2}\frac{1}{2m-1} - \frac{1}{4} + \cdot \cdot \cdot + \sum_{m = N_{k-1} + 1}^{N_k}\frac{1}{2m-1} - \frac{1}{2k} + \cdot \cdot \cdot
+    \]
+    diverges as desired.
+\end{proof}
+
+\begin{problem}
+    Let $(p_k)$ be the sequence of prime numbers, and let $J_N$ denote the set of natural numbers whose factorization into primes only involves the primes $\{p_k \in \mathbb{N} : 1 \leq k \leq N\}$. Prove the following identity
+    \[
+    \sum_{n \in J_N}\frac{1}{n^r} = \prod_{k=1}^{N}\frac{1}{1-p_k^{-r}}
+    \]
+    for any $N \in \mathbb{N}$ and $r \in \mathbb{Q} \cap (1,\infty)$. From this deduce \textit{Euler’s Formula}
+    \[
+    \sum_{n=1}^{\infty}\frac{1}{n^r} = \prod_{k=1}^{\infty}\frac{1}{1-p_k^{-r}}.
+    \]
+\end{problem}
+
+\begin{proof}
+    Let $(p_k)$ be the sequence of prime numbers. Suppose that 
+    \[
+    J_N := \left\{\prod p_k \in \mathbb{N} : 1 \leq k \leq N\right\} \ (N = 1,2,3,\cdot \cdot \cdot).
+    \]
+    Inductively, assume that $p_N \geq N$, $J_N \subset J_{N+1}$ and $\{1,...,N\} \subset J_{N} \ (N = 1,2,3,\cdot \cdot \cdot)$. Then 
+    \[
+    p_{N+1} \geq p_N + 1 \geq N + 1
+    \]
+    (else, $p_{N+1} < p_{N} + 1 \implies p_{N+1}-p_{N} < 1 \implies p_N = p_{N+1}$)
+    and 
+    \[
+    J_{N+1} \subset J_{N+2}
+    \]
+    (else, $p_{N+1} > p_{N+2} \implies J_{N} \not \subset J_{N+1}$); hence,
+    \[
+    \{1,...,N+1\} = \{1,...,N\} \cup \{N+1\} \subset J_N \cup \{N+1\} \subset J_{N+1}
+    \]
+    (else, $p_{N+1} < N+1$). Fix $r \in \mathbb{Q} \cap (1,\infty)$. Inductively, assume that
+    \[
+    \sum_{n \in J_N}\frac{1}{n^r} = \prod_{k=1}^{N}\frac{1}{1-p_k^{-r}} \ (N = 1,2,3,\cdot \cdot \cdot).
+    \]
+    Then 
+    \begin{align*}
+        \sum_{n \in J_{N+1}}\frac{1}{n^r} &= \sum_{n \in J_N}\frac{1}{n^r} + \frac{1}{p_{N+1}^r}\sum_{n \in J_N}\frac{1}{n^r} + \cdot \cdot \cdot + \frac{1}{p_{N+1}^{Nr}}\sum_{n \in J_N}\frac{1}{n^r} + \cdot \cdot \cdot \\
+        &= \sum_{n \in J_{N}}\frac{1}{n^r}\left(1 + \frac{1}{p_{N+1}^r} + \frac{1}{p_{N+1}^{2r}} + \cdot \cdot \cdot\right) \\
+        &= \prod_{k=1}^{N}\frac{1}{1-p_k^{-r}} \cdot \frac{1}{1-p_{N+1}^{-r}} = \prod_{k=1}^{N+1}\frac{1}{1-p_k^{-r}}.
+    \end{align*}
+    Thus,
+    \[
+    \sum_{n=1}^{N}\frac{1}{n^r} < \sum_{n \in J_{N}}\frac{1}{n^r} \ (N = 1,2,3,\cdot \cdot \cdot) \implies \lim_{N \to \infty}\sum_{n=1}^{N}\frac{1}{n^r} \leq \lim_{N \to \infty}\sum_{n \in J_N}\frac{1}{n^r};
+    \]
+    however, 
+    \[
+    J_N \subset \mathbb{N} \ (N = 1,2,3,\cdot \cdot \cdot) \implies \lim_{N \to \infty}\sum_{n=1}^{N}\frac{1}{n^r} \geq \lim_{N \to \infty}\sum_{n \in J_N}\frac{1}{n^r}
+    \]
+    and 
+    \[
+    \sum_{n=1}^{\infty}\frac{1}{n^r} := \lim_{N \to \infty}\sum_{n=1}^{N}\frac{1}{n^r} = \lim_{N \to \infty}\sum_{n \in J_{N}}\frac{1}{n^r} = \lim_{N \to \infty}\prod_{k=1}^{N}\frac{1}{1-p_k^{-1}} =: \prod_{k=1}^{\infty}\frac{1}{1-p_k^{-r}}.
+    \]
+    
+\end{proof}
+
+\end{document}
