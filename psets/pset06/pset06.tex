@@ -1,0 +1,205 @@
+\documentclass{amsart}
+\usepackage{amsmath, amssymb, amsthm, enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{18.100B Problem Set 6}
+\author{Shuo Zheng}
+\date{May 7, 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Suppose that $f: \mathbb{R} \to \mathbb{R}$ satisfies $\forall x \in \mathbb{R}$, 
+    \[
+    \lim_{h \to 0}[f(x + h) - f(x - h)] = 0.
+    \]
+    Does this imply that $f$ is continuous?
+\end{problem}
+
+\begin{proof}
+    Start by defining $f: \mathbb{R} \to \mathbb{R}$ with 
+    \[
+    f(x) := \begin{cases}
+        0 & x = 0 \\
+        1 & x \neq 0
+    \end{cases}.
+    \]
+    Then $\forall x \in \mathbb{R}$,
+    \[
+    \lim_{h \to 0}[f(x + h) - f(x - h)] := \lim_{h \to 0}(1 - 1) = \lim_{h \to 0}0 = 0;
+    \]
+    however, $f$ is discontinuous (namely, at $x = 0$). 
+\end{proof}
+
+\begin{problem}
+    Let $X$ and $Y$ be metric spaces and $f: X \to Y$ a function. Prove that $f$ is continuous if and only if $f(\overline{E}) \subset \overline{f(E)}$ for any subset $E \subset X$. 
+\end{problem}
+
+\begin{proof}
+    Let $f: X \to Y$ be any function. Suppose that $f$ is continuous on $X$. Assume that $E \subset X$. Then $\overline{f(E)} \subset Y$ is closed; hence, $f^{-1}(\overline{f(E)}) \subset X$ is closed and 
+    \[
+    E \subset f^{-1}(\overline{f(E)}) \implies \overline{E} \subset f^{-1}(\overline{f(E)}) \implies f(\overline{E}) \subset \overline{f(E)}
+    \]
+    as desired. Suppose that $\forall E \subset X$, $f(\overline{E}) \subset \overline{f(E)}$. Assume that $F \subset Y$ is closed. Then $f^{-1}(F) \subset X$; hence,
+    \[
+    f(\overline{f^{-1}(F)}) \subset \overline{f(f^{-1}(F))} \subset \overline{F} = F \implies f^{-1}(F) = \overline{f^{-1}(F)},
+    \]
+    i.e. $f$ is continuous on $X$.
+\end{proof}
+
+\begin{problem}
+    Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the zero set of $f$) be the set of all $x \in X$ at which $f(x) = 0$. Prove that $Z(f)$ is closed.
+\end{problem}
+
+\begin{proof}
+    Let $f: (X,d) \to \mathbb{R}$ be any function. Assume that $f$ is continuous on $X$. Suppose that $x \in X$ is any limit point of $Z(f)$. Then $\forall \epsilon > 0$, $\exists \delta > 0$ where
+    \[
+    d(x,y) < \delta \implies \vert f(x) - f(y) \vert < \epsilon;
+    \]
+    hence, $\exists z \in Z(f)$ where 
+    \[
+    d(x,z) < \delta \implies \vert f(x) \vert = \vert f(x) - f(z) \vert < \epsilon \implies f(x) = 0 \implies x \in Z(f).
+    \]
+\end{proof}
+
+\begin{problem}
+    Let $f$ and $g$ be continuous mappings of a metric space $X$ into a metric space $Y$, and let $E$ be a dense subset of $X$. Prove that $f(E)$ is dense in $f(X)$. If $f(x) = g(x)$ for all $x \in E$, prove that $f(x) = g(x)$ for all $x \in X$. (In other words, a continuous mapping is determined by its values on a dense subset of its domain.)
+\end{problem}
+
+\begin{proof}
+    Let $f: X \to Y$ and $g: X \to Y$ be any mappings. Suppose that $f$ and $g$ are continuous on $X$. Choose $E \subset X$ to be any dense subset. Then 
+    \[
+    f(E) \subset f(X) \implies \overline{f(E)} \subset \overline{f(X)} \subset f(\overline{X}) = f(X)
+    \]
+    (else, $\exists (x_n) \in X$ where $x_n \to x$ and $f(x_n) \not \to f(x)$); however, 
+    \[
+    f(X) = f(\overline{E}) \subset \overline{f(E)}
+    \]
+    (Problem 2) and $\overline{f(E)} = f(X)$. Assume that $\forall x \in E, \ f(x) = g(x)$. Then 
+    \[
+    f(E) = g(E) \implies f(X) = \overline{f(E)} = \overline{g(E)} = g(X).
+    \]
+    Indeed
+    \[
+    \forall x \in E, \ f(x) = g(x) \implies \forall x \in X, \ f(x) = g(x).
+    \]
+\end{proof}
+
+\begin{problem}
+    Suppose that $f: X \to Y$ is a uniformly continuous mapping between metric spaces.
+    \begin{enumerate}[label = (\alph*)]
+        \item Prove that if $(x_n)$ is a Cauchy sequence in $X$, then $(f(x_n))$ is a Cauchy sequence in $Y$.
+        \item Use the function $g : \mathbb{R} \to \mathbb{R}$, $g(x) = x^2$ to show that it is possible for a continuous function to send Cauchy sequences to Cauchy sequences without being uniformly continuous.
+\end{enumerate}
+\end{problem}
+
+\begin{proof}
+    Let $f: X \to Y$ be any mapping.
+    \begin{enumerate}[label = (\alph*)]
+        \item Suppose that $f$ is uniformly continuous on $X$. Make any Cauchy sequence $(x_n)$ in $X$. Then $\forall \epsilon > 0$, $\exists \delta > 0$ where 
+        \[
+        d(x_m,x_n) < \delta \implies d(f(x_m),f(x_n)) < \epsilon;
+        \]
+        however, $\exists M \in \mathbb{N}$ where 
+        \[
+        m,n \geq M \implies d(x_m,x_n) < \delta
+        \]
+        and 
+        \[
+        m,n \geq M \implies d(f(x_m),f(x_n)) < \epsilon,
+        \]
+        i.e. $(f(x_n))$ is a Cauchy sequence in $Y$. 
+        \item Suppose that $X = Y = \mathbb{R}$ and $f(x) = x^2$. Then $\forall \epsilon > 0$, $\exists \delta > 0$ (namely, $\delta := \epsilon / 2\alpha$ where $\alpha$ is an upper bound of $(x_n)$) where 
+        \begin{align*}
+            \vert x_m - x_n \vert < \delta \implies \vert f(x_m) - f(x_n) \vert &= \vert x_m^2 - x_n^2 \vert \\
+            &= \vert x_m + x_n \vert \vert x_m - x_n \vert \\
+            &\leq (\vert x_m \vert + \vert x_n \vert)(\vert x_m - x_n \vert) \\
+            &\leq 2\alpha\delta = \epsilon,
+        \end{align*}
+        ($f$ is continuous on $X$); however, $\exists M \in \mathbb{N}$ where 
+        \[
+        m,n \geq M \implies \vert x_m - x_n \vert < \delta
+        \]
+        and 
+        \[
+        m,n \geq M \implies \vert f(x_m) - f(x_n) \vert < \epsilon
+        \]
+        ($(f(x_n))$ is a Cauchy sequence in $Y$).
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}
+    In class, we showed that a continuous function $f: [a,b] \to \mathbb{R}$ is uniformly continuous. Prove this by either:
+    \begin{enumerate}[label = (\alph*)]
+        \item Assume it is false, so for some $\epsilon > 0$ no choice of $\delta > 0$ works everywhere. Find, for each $n \in \mathbb{N}$ a point $x_n$ where $\delta = \frac{1}{n}$ does not work. Extract a convergent subsequence, $(x_{n_k})$ and derive a contradiction from the convergence of $(f(x_{n_k}))$.   
+        \item Fix $\epsilon > 0$, and for each $x \in [a, b]$ let $\delta(x)$ be the length of the largest open interval centered at $x$ such that $\vert f(y) - f(z) \vert < \epsilon$ (really $\delta(x)$ is defined as a supremum of course). Show that $\delta(x) > 0$ and $\delta(x)$ is continuous. Because $[a,b]$ is compact, $\delta(x)$ must achieve a minimum, say $\delta_0$. Show that $\delta_0$ works in the definition of uniform continuity.    
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}
+    Let $f: [a,b] \to \mathbb{R}$ be any continuous function.
+    \begin{enumerate}[label = (\alph*)]
+        \item Assume, for the purpose of contradiction, that $f$ is not uniformly continuous on $[a,b]$. Then $\exists \epsilon > 0$, $\forall \delta > 0$ where
+        \[
+        \vert x - y \vert < \delta \implies \vert f(x) - f(y) \vert \geq \epsilon.
+        \]
+        Make a sequence $(x_n)$ of $[a,b]$ in the following construction: Pick $x_1 \in [a,b]$. Given that $x_1,...,x_n \in [a,b]$ are fixed, define $x_{n+1} \in [a,b]$ such that 
+        \[
+        \vert x_{n+1} - x_n \vert < \frac{1}{n+1} \implies \vert f(x_{n+1}) - f(x_n) \vert \geq \epsilon.
+        \]
+        Extract any convergent subsequence $(x_{n_k})$ of $[a,b]$ (Bolzano-Weierstrass Theorem) with limit $x$. Since $f$ is continuous on $[a,b]$, $\exists \delta > 0$ where
+        \[
+        \vert x_{n_{k}} - x \vert < \delta \implies \vert f(x_{n_k}) - f(x) \vert < \epsilon;
+        \]
+        however, $\exists M \in \mathbb{N}$ where
+        \[
+        k \geq M \implies \vert x_{n_k} - x \vert < \delta
+        \]
+        and 
+        \[
+        k \geq M \implies \vert f(x_{n_k}) - f(x) \vert < \epsilon,
+        \]
+        i.e. $(f(x_{n_k}))$ is a convergent subsequence of $[a,b]$ with limit $f(x)$. Then $(f(x_{n_k}))$ is a Cauchy subsequence of $[a,b]$; hence, $\exists M \in \mathbb{N}$ where
+        \[
+        i,j \geq M \implies \vert f(x_{n_i}) - f(x_{n_j}) \vert < \epsilon
+        \]
+        (a contradiction).
+        \item Fix $\epsilon > 0$. Make $\delta: [a,b] \to \mathbb{R}$ such that 
+        \[
+        \delta(x) := \sup\{r \in \mathbb{R} : \forall y,z \in B_r(x), \ \vert f(y) - f(z) \vert < \epsilon\}.
+        \]
+        Given that $f$ is continuous on $[a,b]$, $\exists r > 0$ where 
+        \[
+        y,z \in B_r(x) \implies \vert f(y) - f(x) \vert < \frac{\epsilon}{2} \land \vert f(z) - f(x) \vert < \frac{\epsilon}{2}
+        \]
+        and 
+        \begin{align*}
+            y,z \in B_r(x) \implies \vert f(y) - f(z) \vert &= \vert (f(y) - f(x)) + (f(x) - f(z)) \vert \\
+            &\leq \vert f(y) - f(x) \vert + \vert f(z) - f(x) \vert \\
+            &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon;
+        \end{align*}
+        hence, $\delta(x) > 0$. Similarly, 
+        \[
+        \vert x - y \vert < \delta(x) \implies \vert f(x) - f(y) \vert < \epsilon;
+        \]
+        however, 
+        \[
+        \vert x - y \vert < \delta(y) \implies \vert f(x) - f(y) \vert < \epsilon
+        \]
+        and 
+        \[
+        \delta(x) = \delta(y) \implies \vert \delta(x) - \delta(y) \vert < \epsilon,
+        \]
+        so $\delta$ is continuous on $[a,b]$. By the Extreme Value Theorem, $\delta$ achieves a minimum $\delta_0 \in \mathbb{R}$ on $[a,b]$; hence,
+        \[
+        \vert x - y \vert < \delta_0 \implies \vert f(x) - f(y) \vert < \epsilon.
+        \]
+    \end{enumerate}
+\end{proof}
+
+
+\end{document}
