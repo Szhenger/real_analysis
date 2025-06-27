@@ -1,0 +1,305 @@
+\documentclass{amsart}
+\usepackage{amsmath, amssymb, amsthm, enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{18.100B Problem Set 7}
+\author{Shuo Zheng}
+\date{June 7, 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Suppose $f$ is a real function defined on $\mathbb{R}$. We call $x \in \mathbb{R}$ a fixed point of $f$ if $f(x) = x$.
+    \begin{enumerate}[label = (\alph*)]
+    \item If $f$ is diﬀerentiable and $f'(x) \neq 1$ for every real $x$, prove that $f$ has at most one fixed point.
+    \item  Show that the function $f$ defined by
+    \[
+    f(x) = x + \frac{1}{1 + e^x}
+    \]
+    has no fixed point, although $0 < f'(x) < 1$ for all real $x$.
+    \item However, if there is a constant $0 < \lambda < 1$ such that $\vert f'(x) \vert \leq \lambda$ for all real $x$, prove that a fixed point $x_0$ of $f$ exists, and that $x_n \to x_0$, where $x_1$ is an arbitrary real number and
+    \[
+    \forall n \in \mathbb{N}, \ x_{n+1} := f(x_n).
+    \]
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}
+    Let $f: \mathbb{R} \to \mathbb{R}$ be any function. 
+    \begin{enumerate}[label = (\alph*)]
+        \item Suppose that $f$ is differentiable on $\mathbb{R}$ and 
+        \[
+        \forall x \in \mathbb{R}, \ f'(x) :\neq 1.
+        \]
+        Assume, for the purpose of contradiction, that $f$ has more than one fixed point. Then $f$ is continuous on $\mathbb{R}$, and $\exists x_0,y_0 \in \mathbb{R}$ where 
+        \[
+        x_0 \neq y_0 \land f(x_0) = x_0 \land f(y_0) = y_0.
+        \]
+        By the Mean Value Theorem, $\exists t \in \mathbb{R}$ such that
+        \[
+        f'(t)(x_0 - y_0) = f(x_0) - f(y_0) = (x_0 - y_0) \implies f'(t) = 1
+        \]
+        (a contradiction); hence, $f$ can only have at most one fixed point.
+        \item Suppose that 
+        \[
+        \forall x \in \mathbb{R}, \ f(x) := x + \frac{1}{1 + e^x}.
+        \]
+        Then 
+        \[
+        \forall x \in \mathbb{R}, \ f(x) > x
+        \]
+        ($f$ has no fixed point); however, $f$ is differentiable on $\mathbb{R}$ and 
+        \[
+        \forall x \in \mathbb{R}, \ f'(x) = 1 - \frac{e^x}{(1 + e^x)^2} \implies 0 < f'(x) < 1
+        \]
+        (Chain Rule).
+        \item Suppose that $\exists \lambda \in \mathbb{R}$ where $0 < \lambda < 1$ and 
+        \[
+        \forall x \in \mathbb{R}, \ \vert f'(x) \vert \leq \lambda.
+        \]
+        Pick $x_1 \in \mathbb{R}$. Given that $x_1,...,x_n$ are fixed, define
+        \[
+        x_{n + 1} := f(x_n).
+        \]
+        Inductively, assume that $\vert x_n - x_{n+1} \vert \leq \lambda^{n-1}\vert x_1 - x_2\vert$. By the Mean Value Theorem, $\exists t \in \mathbb{R}$ such that 
+        \begin{align*}
+            \vert x_{n+1} - x_{n+2} \vert \leq \vert f(x_n) - f(x_{n+1}) \vert &= \vert f'(t) (x_n - x_{n+1}) \vert \\
+            &= \vert f'(t) \vert \vert x_n - x_{n+1} \vert \\
+            &\leq \lambda^n\vert x_1 - x_2 \vert.
+        \end{align*}
+        Choose $\epsilon > 0$. Then  
+        \begin{align*}
+            \vert x_m - x_n \vert &\leq \vert x_m - x_{m+1} \vert + \cdot \cdot \cdot + \vert x_{n-1} - x_n \vert \\ 
+            &\leq (\lambda^m + \cdot \cdot \cdot + \lambda^{n-1})\vert x_1 - x_2 \vert \\
+            &= \lambda^m(1 + \cdot \cdot \cdot + \lambda^{n-m-1})\vert x_1 - x_2 \vert \\
+            &= \lambda^m\frac{1 - \lambda^{n-m}}{1-\lambda}\vert x_1 - x_2 \vert \\
+            &< \frac{\lambda^m}{1 - \lambda}\vert x_1 - x_2 \vert;
+        \end{align*}
+        however, $\exists M \in \mathbb{N}$ where
+        \[
+        \lambda^M\vert x_1 - x_2 \vert < (1 - \lambda)\epsilon
+        \]
+        and $\forall m,n \geq M$,
+        \[
+        \vert x_m - x_n \vert < \frac{\lambda^m}{1 - \lambda}\vert x_1 - x_2 \vert \leq \frac{\lambda^M}{1 - \lambda}\vert x_1 - x_2 \vert < \epsilon,
+        \]
+        i.e. $(x_n)$ is convergent. Indeed, $\exists x_0 \in \mathbb{R}$ such that $x_n \to x_0$ and 
+        \begin{align*}
+            \vert x_0 - f(x_0) \vert &\leq \vert x_0 - x_{N+1} \vert + \vert x_{N+1} - f(x_0) \vert \\
+            &< \frac{\epsilon}{1 + \lambda} + \vert f(x_N) - f(x_0) \vert \\
+            &\leq \frac{\epsilon}{1 + \lambda} + \lambda \vert x_N - x_0 \vert \\
+            &< \frac{\epsilon}{1 + \lambda} + \frac{\lambda\epsilon}{1 + \lambda} = \epsilon
+        \end{align*}
+        for some $N \in \mathbb{N}$; hence, $f(x_0) = x_0$.
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}
+    Let $f$ be a continuous real function on $\mathbb{R}$, of which it is known that $f'(x)$ exists for all $x \neq 0$ and that $f'(x) \to 7$ as $x \to 0$. Does it follow that $f'(0)$ exists?
+\end{problem}
+
+\begin{proof}
+    Let $f: \mathbb{R} \to \mathbb{R}$ be any function. Suppose that $f$ is continuous on $\mathbb{R}$ and differentiable on $\mathbb{R} \setminus \{0\}$ where 
+    \[
+    \lim_{x \to 0}f'(x) = 7.
+    \]
+    By L'Hospital's Rule,
+    \[
+    f'(0) := \lim_{x \to 0}\frac{f(x) - f(0)}{x} \ \left( \frac{0}{0} \right) = \lim_{x \to 0}\frac{(f(x) - f(0))'}{(x)'} = \lim_{x \to 0}f'(x) = 7.
+    \]
+\end{proof}
+
+\begin{problem}
+    Let $f$ be a real function on $[a,b]$ and suppose $n \geq 2$ is an integer, $f^{(n-1)}$ is continuous on $[a,b]$, and $f^{(n)}(x)$ exists for all $x \in (a,b)$. Moreover, assume there exists $x_0 \in (a,b)$ such that
+    \[
+    f'(x_0) = f''(x_0) = \cdot \cdot \cdot = f^{(n-1)}(x_0) = 0, f^{(n)}(x_0) \neq 0.    
+    \]
+    Prove the following criteria: If $n$ is even, then $f$ has a local minimum at $x_0$ when $f^{(n)}(x_0) > 0$, and $f$ has a local maximum at $x_0$ when $f^{(n)}(x_0) < 0$. If $n$ is odd, then $f$ does not have a local minimum or maximum at $x_0$. \textit{Hint:} Use Taylor’s Theorem.
+\end{problem}
+
+\begin{proof}
+    Let $f: [a,b] \to \mathbb{R}$ be any function. Suppose that $n \in \mathbb{N}$, $f^{(n)}$ is continuous on $[a,b]$, and $f^{(n+1)}$ exists on $[a,b]$. Assume $\exists x_0 \in (a,b)$ where
+    \[
+    f'(x_0) = f''(x_0) = \cdot \cdot \cdot = f^{(n)}(x_0) = 0, f^{(n+1)}(x_0) \neq 0.
+    \]
+    By Taylor's Theorem, 
+    \begin{align*}
+        f(x) &= f(x_0) + f'(x_0)(x-x_0) + \cdot \cdot \cdot + \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1} \\
+        &= f(x_0) + 0 + \cdot \cdot \cdot + 0 + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1} \\
+        &= f(x_0) + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1}
+    \end{align*}
+    for some $c \in (\inf\{x_0,x),\sup\{x_0,x\})$; however, 
+    \[
+    \lim_{x \to x_0}f^{(n+1)}(x) = \lim_{h \to 0}\frac{f^{(n)}(x_0+h)-f^{(n)}(x_0)}{h} = f^{(n+1)}(x_0) \neq 0.
+    \]
+    If $n$ is odd, then $\exists k \in \mathbb{N}$ such that $n = 2k-1$ and 
+    \[
+    f(x) = f(x_0) + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1} = f(x_0) + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{2k};
+    \]
+    hence,
+    \[
+    f^{(n+1)}(x_0) > 0 \implies \lim_{x \to x_0}f^{(n+1)}(x) > 0 \implies f^{(n+1)}(c) > 0 \implies f(x) \geq f(x_0)
+    \]
+    and 
+    \[
+    f^{(n+1)}(x_0) < 0 \implies \lim_{x \to x_0}f^{(n+1)}(x) < 0 \implies f^{(n+1)}(c) < 0 \implies f(x) \leq f(x_0)
+    \]
+    for all $x$ in some $\delta$-neighborhood of $x_0$, so $f$ has a local extrema at $x_0$. If $n$ is even, then $\exists k \in \mathbb{N}$ such that $n = 2k$ and 
+    \[
+    f(x) = f(x_0) + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1} = f(x_0) + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{2k+1} \neq f(x_0)
+    \]
+    for all $x$ in every $\delta$-neighborhood of $x_0$; hence, $f$ cannot have a local extrema at $x_0$.
+\end{proof}
+
+\begin{problem}
+    Let $I \subset \mathbb{R}$ be an open interval. A function $f : I \to \mathbb{R}$ is called H\"{o}lder continuous of order $\alpha > 0$ if there is constant $C > 0$ such that
+    \[
+    \vert f(x) - f(y) \vert < C\vert x - y \vert^{\alpha}
+    \]
+    holds for all $x,y \in I$.
+    \begin{enumerate}[label = (\alph*)]
+        \item Show that any H\"{o}lder continuous function is uniformly continuous.
+        \item Prove that $f(x) = \sqrt{\vert x \vert}$ is H\"{o}lder continuous of order $\alpha = 1/2$.    
+        \item Prove that H\"{o}lder continuity of order $\alpha$ implies H\"{o}lder continuity of order $0 < \beta \leq \alpha$, provided that $I$ is bounded. What happens if $I$ is unbounded?
+        \item Show that if $f$ is H\"{o}lder continuous of order $\alpha > 1$, then $f$ has to be constant.
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}
+    Let $f: I \to \mathbb{R}$ be any function. 
+    \begin{enumerate}[label = (\alph*)]
+        \item Suppose that $f$ is H\"{o}lder continuous of order $\alpha > 0$. Then $\exists C > 0$,
+        \[
+        x,y \in I \implies \vert f(x) - f(y) \vert < C\vert x - y \vert^{\alpha}.
+        \]
+        Fix $\epsilon > 0$. Make $\delta := \sqrt[\alpha]{\epsilon/C} > 0$. Then $\forall x,y \in I$, 
+        \[
+        \vert x - y \vert < \delta \implies \vert f(x) - f(y) \vert < C\vert x-y \vert^{\alpha} < C\delta^{\alpha} = \epsilon.
+        \]  
+        Ergo, $f$ is uniformly continuous. 
+        \item Suppose that $I = (-\infty,\infty)$ and $f(x) = \sqrt{\vert x \vert}$. By the Triangle Inequality,
+        \[
+        x,y \in I \implies \sqrt{\vert x + y \vert} \leq \sqrt{\vert x \vert} + \sqrt{\vert y \vert};
+        \]
+        hence,
+        \[
+        x,y \in I \implies \sqrt{\vert x \vert} - \sqrt{\vert y \vert} \leq \sqrt{\vert x-y \vert}.
+        \]
+        Then $\forall x,y \in I$, 
+        \[
+        \vert f(x) - f(y) \vert = \vert \sqrt{\vert x \vert} - \sqrt{\vert y \vert} \vert \leq \vert \sqrt{\vert x - y \vert} \vert = \sqrt{\vert x - y \vert}.
+        \]
+        Ergo, $f$ is H\"{o}lder continuous of order $\alpha = 1/2$.
+        \item Suppose that $f$ is H\"{o}lder continuous of order $\alpha > 0$. Assume that $I$ is bounded. Fix $0 < \beta < \alpha$. Then $\exists C > 0$ where 
+        \[
+        x,y \in I \implies \vert f(x) - f(y) \vert < C\vert x - y \vert^{\alpha},
+        \]
+        and $\exists \gamma > 0$ where 
+        \[
+        x,y \in I \implies \vert x - y \vert \leq \gamma;
+        \]
+        hence,
+        \begin{align*}
+            x,y \in I \implies \vert f(x) - f(y) \vert &< C\vert x - y \vert^{\alpha} \\
+            &= C\vert x - y \vert^{\alpha - \beta}\vert x - y \vert^{\beta} \\
+            &\leq  C\gamma^{\alpha - \beta}\vert x - y \vert^{\beta}.
+        \end{align*}
+        Ergo, $f$ is H\"{o}lder continuous of order $0 < \beta < \alpha$. Assume that $I$ is unbounded and $f(x) = \sqrt{\vert x \vert}$. Given that $f$ is H\"{o}lder continuous, $\alpha = 1/2$ and $\beta = 1/3$. Then $\forall C > 0$, $\exists x,y \in I$ where 
+        \[
+        \vert f(x) - f(y) \vert = \vert \sqrt{\vert x \vert} - \sqrt{\vert y \vert} \vert = \sqrt{\vert x \vert} \geq C\sqrt[3]{\vert x \vert} = C\sqrt[3]{\vert x - y \vert}.
+        \]
+        Ergo, $f$ is not H\"{o}lder continuous of order $0 < \beta < \alpha$.
+        \item Suppose that $f$ is H\"{o}lder continuous of order $\alpha > 1$. Then $\exists C > 0$, 
+        \[
+        x \in I \implies \vert f(x+h) - f(x) \vert < C \vert h \vert^{\alpha}
+        \]
+        for all sufficiently small $h \neq 0$. By the Squeeze Theorem, 
+        \begin{align*}
+            x \in I &\implies 0 \leq \bigg \vert \frac{f(x+h) - f(x)}{h} \bigg \vert < C\vert h \vert^{\alpha - 1} \\
+            &\implies 0 \leq \lim_{h \to 0}\bigg \vert \frac{f(x+h) - f(x)}{h} \bigg \vert \leq C\lim_{h \to 0}\vert h \vert^{\alpha-1} = 0 \\
+            &\implies f'(x) = 0.
+        \end{align*}
+        Then $f$ is differentiable and continuous on $I$. By the Mean Value Theorem, 
+        \[
+        x,y \in I \implies f(x) = f(y) + f'(c)(x - y) = f(y) + 0 = f(y)
+        \]
+        for some $c \in I$. Ergo, $f$ is constant. 
+    \end{enumerate}
+\end{proof}
+
+\begin{problem}
+    Let $a \in \mathbb{R}$, and suppose $f : (a, \infty) \to \mathbb{R}$ is twice-diﬀerentiable. Define
+    \[
+    M_0 := \sup_{a < x < \infty}\vert f(x) \vert, \ M_1 := \sup_{a < x < \infty}\vert f'(x) \vert, \ M_2 := \sup_{a < x < \infty}\vert f''(x) \vert,
+    \]
+    which we assume to be finite numbers. Prove the inequality
+    \[
+    M_1^2 \leq 4M_0M_2.
+    \]
+    To show that $M_1^2 = 4M_0M_2$ can actually happen, take $a = -1$, define
+    \[
+    f(x) = \begin{cases}
+        2x^2-1 & -1 < x < 0 \\
+        \frac{x^2-1}{x^2+1} & 0 \leq x \leq \infty \\
+    \end{cases}
+    \]
+    and show that $M_0 = 1$, $M_1 = 4$, and $M_2 = 4$.
+    \textit{Hint:} If $h > 0$, Taylor’s Theorem shows that 
+    \[
+    f'(x) = \frac{1}{2h}[f(x+2h) - f(x)] - f''(\xi)h
+    \]
+    for some $\xi \in (x,x+2h)$. Hence
+    \[
+    |f'(x)| \leq \frac{M_0}{h} + M_2h.
+    \]
+\end{problem}
+
+\begin{proof}
+    Let $f: (a,\infty) \to \mathbb{R}$ be any mapping. Suppose that $f$ is twice-differentiable. Define 
+    \[
+    M_0 := \sup_{a < x < \infty}\vert f(x) \vert, \ M_1 := \sup_{a < x < \infty}\vert f'(x) \vert, \ M_2 := \sup_{a < x < \infty}\vert f''(x) \vert \in \mathbb{R}.
+    \]
+    Make $x \in (a,\infty)$. Choose $h := \sqrt{M_0/M_2} > 0$. By Taylor's Theorem, $\exists \xi \in (x,x+h)$ such that 
+    \[
+    f'(x) = \frac{f(x+2h) - f(x)}{2h} - f''(\xi)h.  
+    \]
+    By the Triangle Inequality, we have that
+    \begin{align*}
+        \vert f'(x) \vert = \bigg\vert \frac{f(x+2h) - f(x)}{2h} - f''(\xi)h \bigg\vert &\leq \frac{\vert f(x+2h) - f(x) \vert}{2h} + \vert f''(\xi) \vert h \\
+        &\leq \frac{\vert f(x+2h) \vert }{2h} + \frac{\vert f(x) \vert}{2h} + \vert f''(\xi) \vert h \\ 
+        &\leq \frac{M_0}{2h} + \frac{M_0}{2h} + M_2h = \frac{M_0}{h} + M_2h.
+    \end{align*}
+    Indeed, we obtain that 
+    \begin{align*}
+        M_1^2 \leq \left(\frac{M_0}{h} + M_2h\right)^2 &= \left(\frac{M_0}{h}\right)^2 + 2M_0M_2 + (M_2h)^2 \\
+        &= M_0M_2 + 2M_0M_2 + M_0M_2 = 4M_0M_2.
+    \end{align*}
+    Define $a := -1$ and   
+    \[
+    f(x) := \begin{cases}
+        2x^2-1 & -1 < x < 0 \\
+        \frac{x^2-1}{x^2+1} & 0 \leq x \leq \infty \\
+    \end{cases} \implies M_0 = 1.
+    \]
+    Indeed, 
+    \[
+    f'(x) := \begin{cases}
+        4x & -1 < x < 0 \\
+        \frac{4x}{(x^2+1)^2} & 0 \leq x \leq \infty \\
+    \end{cases} \implies M_1 = 4
+    \]
+    and 
+    \[
+    f'(x) := \begin{cases}
+        4 & -1 < x < 0 \\
+        \frac{20x^2+4}{(x^2+1)^3} & 0 \leq x \leq \infty \\
+    \end{cases} \implies M_2 = 4;
+    \]
+    hence, $M_1^2 = 16 \leq 16 = 4M_0M_2$.
+\end{proof}
+
+\end{document}
